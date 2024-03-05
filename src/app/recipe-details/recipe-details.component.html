@@ -2,7 +2,7 @@
   <div class="ingredient-list">
     <h3>Ingredients</h3>
     <ng-container *ngFor="let ingredient of recipe.ingredients; index as i;">
-      <li>{{recipe.amount[i]}} {{ingredient.unit}}  {{ingredient.name}}</li>
+      <li>{{recipe.amount[i]}} {{recipe.unit[i]}} {{ingredient.name}}</li>
     </ng-container>
   </div>
   <h3>Steps</h3>
