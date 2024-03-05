@@ -4,3 +4,4 @@ export interface Ingredient {
   category: string;
   subcatagory?: string;
 }
+

@@ -1,7 +1,10 @@
 <div *ngIf="recipe">{{recipe.id}}
-  <div *ngFor="let ingredient of recipe.ingredients" class="ingredient-list">
-    {{ingredient.name}}
+  <div class="ingredient-list">
+    <h3>Ingredients</h3>
+    <ng-container *ngFor="let ingredient of recipe.ingredients; index as i;">
+      <li>{{recipe.amount[i]}} {{ingredient.name}}</li>
+    </ng-container>
   </div>
-  
+  <h3>Steps</h3>
   <li *ngFor="let step of recipe.steps; index as i;">{{i + 1}}. {{step}}</li>
 </div>

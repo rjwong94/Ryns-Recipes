@@ -5,6 +5,7 @@ export const RECIPES: Recipe[] = [
   {
     id: 1, name: 'Red Sauce',
     ingredients: [INGREDIENTS[2], INGREDIENTS[3], INGREDIENTS[4]],
+    amount: [3,2,4],
     steps: [
       'Sautee garlic in 1/4 cup oil over medium in a pot or sauce pan.',
       'Add red pepper flakes and dried oregano.',
@@ -15,5 +16,5 @@ export const RECIPES: Recipe[] = [
       'Remove the sauce from the heat, remove the basil, and stir in 2 tbsp of unsalted butter until melted and combined. Season with salt and pepper to taste.'
     ]
   },
-  {id: 2, name: 'Oyakodon', ingredients: [INGREDIENTS[0]]}
+  // {id: 2, name: 'Oyakodon', ingredients: [INGREDIENTS[0]]}
 ];
