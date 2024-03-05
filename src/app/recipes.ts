@@ -5,6 +5,5 @@ export interface Recipe {
   name: string;
   ingredients: Ingredient[];
   amount: number[];
-  unit?: string[];
   steps?: string[];
 }
