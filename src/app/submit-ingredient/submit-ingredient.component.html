@@ -1,6 +1,8 @@
 <label for="category">Category: </label>
-<select (change)="categorySelect()" name="category" id="cat-drop">
-  <option value="Meats, Poultry, and Seafood">Meats, Poultry, and Seafood</option>
+<select (change)="categorySelect()" required name="category" id="cat-drop">
+  <select>
+    <option selected value="Meats, Poultry, and Seafood">Meats, Poultry, and Seafood</option>
+  </select>
   <option value="Vegetables">Vegetables</option>
   <option value="Dairy">Dairy</option>
 </select>
