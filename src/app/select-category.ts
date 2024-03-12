@@ -5,7 +5,7 @@ import { INGREDIENTS } from "./stored-ingredients";
 export class SelectCategory {
   getCategories() {
     INGREDIENTS.forEach(element => {
-      return element.category;
+      return element;
     });
   }
 }

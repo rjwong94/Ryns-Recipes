@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { NgFor } from '@angular/common';
+import { SelectCategory } from '../select-category';
+import { Ingredient } from '../ingredients';
 
 @Component({
   selector: 'app-submit-ingredient',
@@ -15,8 +18,6 @@ export class SubmitIngredientComponent {
     cat = e.options[e.selectedIndex].value;
     console.log(cat);
   }
-
-
 }
 
 
