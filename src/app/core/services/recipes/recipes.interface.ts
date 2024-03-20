@@ -1,9 +1,9 @@
-import { Ingredient } from "./ingredients";
+import { Ingredient } from "../ingredients/ingredients.interface";
 
 export interface Recipe {
   id: number;
   name: string;
-  ingredients: Ingredient[];
+  ingredients: number[];
   amount: number[];
   unit: string[];
   steps?: string[];

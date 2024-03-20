@@ -1,0 +1,10 @@
+<h1>Recipe</h1>
+
+<div *ngFor="let recipe of recipes" class="recipe-list-nav">
+  <button [class.selected]="recipe.id === selectedRecipeId" (click)="onSelect(recipe.id)">{{recipe.name}}</button>
+</div>
+
+<ng-container *ngIf="selectedRecipeId > -1">
+  <app-recipe-details [id]="selectedRecipeId"></app-recipe-details>
+</ng-container>
+  
