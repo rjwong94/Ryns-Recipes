@@ -1,17 +1,16 @@
 import { Component } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { NgFor } from '@angular/common';
-import { SelectCategory } from '../select-category';
-import { Ingredient } from '../ingredients';
+import { Ingredient } from '../../core/services/ingredients/ingredients.interface';
 
 @Component({
   selector: 'app-submit-ingredient',
   standalone: true,
-  imports: [],
+  imports: [NgFor],
   templateUrl: './submit-ingredient.component.html',
   styleUrl: './submit-ingredient.component.scss'
 })
-export class SubmitIngredientComponent {  
+export class SubmitIngredientComponent {
+  INGREDIENTS = [];
   categorySelect() {
     let cat = 'Meats, Poultry, and Seafood';
     let e = document.getElementById('cat-drop') as HTMLSelectElement;

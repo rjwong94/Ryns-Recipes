@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { INGREDIENTS } from '../stored-ingredients';
+import { INGREDIENTS } from '../../core/services/ingredients/ingredients.data';
 
 @Component({
   selector: 'app-ingredient-list',

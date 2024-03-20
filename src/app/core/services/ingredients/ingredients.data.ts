@@ -1,4 +1,4 @@
-import { Ingredient } from "./ingredients";
+import { Ingredient } from "./ingredients.interface";
 
 export const INGREDIENTS: Ingredient[] = [
   {id: 0, name: 'Chicken Thigh', category: 'Meats, Poultry, and Seafood', categoryID: 0, subcatagory: 'Poultry', unit: ['lbs','g']},
