@@ -4,11 +4,8 @@ export interface Ingredient {
   category: string;
   categoryID: number;
   subcatagory?: string;
+  unit?: string[];
 }
 
-// export interface Category extends Ingredient {
-//   category: string;
-//   categoryID: number;
-//   subcatagory?: string;
-// }
+
 

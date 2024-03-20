@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RECIPES } from '../stored-recipes';
 import { Recipe } from '../recipes';
 import { RecipeDetailsComponent } from '../recipe-details/recipe-details.component';
+import { GetRecipeService } from '../get-recipe.service';
 
 @Component({
   selector: 'app-recipe',
@@ -12,10 +12,15 @@ import { RecipeDetailsComponent } from '../recipe-details/recipe-details.compone
   styleUrl: './recipe.component.scss'
 })
 export class RecipeComponent {
-  recipes = RECIPES;
+  recipeList: Recipe[] = [];
+  recipeService: GetRecipeService = inject(GetRecipeService);
+  constructor() {
+    this.recipeList = this.recipeService.getAllRecipes();
+  }
+
   selectedRecipe?: Recipe;
-  
+
   onSelect(recipe: Recipe): void {
-    this.selectedRecipe = recipe; 
+    this.selectedRecipe = recipe;
   }
 }

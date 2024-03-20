@@ -4,7 +4,7 @@ import { INGREDIENTS } from "./stored-ingredients";
 export const RECIPES: Recipe[] = [
   {
     id: 1, name: 'Red Sauce',
-    ingredients: [INGREDIENTS[2], INGREDIENTS[3], INGREDIENTS[4]],
+    ingredients: [2,3,4],
     amount: [3, 2, 4],
     unit: ['cloves', '', 'tbsp'],
     steps: [
@@ -19,7 +19,7 @@ export const RECIPES: Recipe[] = [
   },
   {
     id: 2, name: 'Oyakodon',
-    ingredients: [INGREDIENTS[0]],
+    ingredients: [0],
     amount: [1],
     unit: ['lbs']
   }

@@ -3,7 +3,7 @@
   <div class="ingredient-list"> 
     <h3>Ingredients</h3>
     <ng-container *ngFor="let ingredient of recipe.ingredients; index as i;">
-      <li>{{recipe.amount[i]}} {{recipe.unit[i]}} {{ingredient.name}}</li>
+      <li>{{recipe.amount[i]}} {{recipe.unit[i]}}</li>
     </ng-container>
   </div>
   <!-- The below steps will eventually have its own component and app outlet in place -->

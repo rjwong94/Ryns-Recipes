@@ -1,6 +1,6 @@
 <h1>Recipe</h1>
 
-<div *ngFor="let recipe of recipes" class="recipe-list-nav">
+<div *ngFor="let recipe of recipeList" class="recipe-list-nav">
   <button [class.selected]="recipe === selectedRecipe" (click)="onSelect(recipe)">{{recipe.name}}</button>
 </div>
 
