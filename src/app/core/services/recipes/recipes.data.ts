@@ -3,11 +3,7 @@ import { Recipe } from "./recipes.interface";
 export const RECIPES: Recipe[] = [
   {
     id: 1, name: 'Red Sauce',
-<<<<<<< HEAD:src/app/stored-recipes.ts
-    ingredients: [2,3,4],
-=======
     ingredients: [2, 3, 4],
->>>>>>> 538370b0e8f3bde270ee8429ee2bf2ed9547dfdc:src/app/core/services/recipes/recipes.data.ts
     amount: [3, 2, 4],
     unit: ['cloves', '', 'tbsp'],
     steps: [

@@ -1,19 +1,18 @@
 <div *ngIf="recipe">{{recipe.id}}
   <!-- The below ingredient-list will eventually have its own component and app outlet in place -->
-  <div class="ingredient-list"> 
+  <div class="ingredient-list">
     <h3>Ingredients</h3>
-<<<<<<< HEAD:src/app/recipe-details/recipe-details.component.html
-    <ng-container *ngFor="let ingredient of recipe.ingredients; index as i;">
-      <li>{{recipe.amount[i]}} {{recipe.unit[i]}}</li>
-=======
     <ng-container *ngFor="let ingredientId of recipe.ingredients; index as i;">
       <ng-container *ngIf="getIngredient(ingredientId) as ingredient">
-        <li>{{recipe.amount[i]}} {{recipe.unit[i]}} {{ ingredient.name }}</li>
+        <ul>{{recipe.amount[i]}} {{recipe.unit[i]}} {{ ingredient.name }}</ul>
       </ng-container>
->>>>>>> 538370b0e8f3bde270ee8429ee2bf2ed9547dfdc:src/app/modules/recipe/recipe-details/recipe-details.component.html
     </ng-container>
   </div>
   <!-- The below steps will eventually have its own component and app outlet in place -->
   <h3>Steps</h3>
-  <li *ngFor="let step of recipe.steps; index as i;">{{i + 1}}. {{step}}</li>
+  <ol >
+    <!-- <ng-container *ngFor="let step of recipe.steps"> -->
+      <li *ngFor="let step of recipe.steps">{{step}}</li>
+    <!-- </ng-container> -->
+  </ol>
 </div>
