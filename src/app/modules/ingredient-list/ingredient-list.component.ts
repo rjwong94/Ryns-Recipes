@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { INGREDIENTS } from '../../core/services/ingredients/ingredients.data';
+import { Ingredient } from '../../core/services/ingredients/ingredients.interface';
+import { IngredientsService } from '../../core/services/ingredients/ingredients.service';
 
 @Component({
   selector: 'app-ingredient-list',
@@ -11,5 +12,12 @@ import { INGREDIENTS } from '../../core/services/ingredients/ingredients.data';
 })
 
 export class IngredientListComponent {
-  ingredients = INGREDIENTS;
+  public ingredient: Ingredient[] = this._is.ingredients;
+  public selectedIngredientId!: number;
+
+  constructor(private _is: IngredientsService) {}
+  
+  onSelect(ingredientId: number): void {
+    this.selectedIngredientId = ingredientId; 
+  }
 }
