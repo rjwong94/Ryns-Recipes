@@ -12,14 +12,14 @@ export class IngredientsService {
         return this.ingredients.filter(ingredient => ingredient.id === id).at(0);
     }
 
-    public getCategory(arr: number[]): number[] | undefined {
-        let unique: number[] = 
-            arr.reduce(function (acc: number[], curr: number){
-                if (!acc.includes(curr))
-                    acc.push(curr);
-                return acc;
-            }, []);
-            return unique;
-        // return this.ingredients.filter((ingredient, index) => ingredient.indexOf(ingredient) === index);
-    }
+    // public getCategory(arr: number[]): number[] | undefined {
+    //     let unique: number[] = 
+    //         arr.reduce(function (acc: number[], curr: number){
+    //             if (!acc.includes(curr))
+    //                 acc.push(curr);
+    //             return acc;
+    //         }, []);
+    //         return unique;
+    //     // return this.ingredients.filter((ingredient, index) => ingredient.indexOf(ingredient) === index);
+    // }
 }
