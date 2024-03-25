@@ -14,21 +14,13 @@ import { IngredientsService } from '../../core/services/ingredients/ingredients.
 export class IngredientListComponent {
   public ingredient: Ingredient[] = this._is.ingredients;
   public selectedIngredientId!: number;
-  public categories!: number[];
+  public categoryID: number[] = this._is.getCategory()
 
   constructor(private _is: IngredientsService) { }
 
   onSelect(ingredientId: number): void {
     this.selectedIngredientId = ingredientId;
   }
-
-  // uniqueCategory(): void {
-  //   this.categories = this.ingredient.forEach(id in ingredient.categoryID) {
-  //     if (!this.categories.includes(id)) {
-  //       this.categories.push(id)
-  //     }
-  //   }
-  // }
 
 }
 

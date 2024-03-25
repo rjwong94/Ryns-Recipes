@@ -5,21 +5,20 @@ import { Ingredient } from "./ingredients.interface";
 @Injectable({ providedIn: 'root' })
 export class IngredientsService {
     public ingredients: Ingredient[] = INGREDIENTS;
-    
-    constructor() {}
+    public categories!: number[];
+
+    constructor() { }
 
     public getIngredient(id: number): Ingredient | undefined {
         return this.ingredients.filter(ingredient => ingredient.id === id).at(0);
     }
 
-    // public getCategory(arr: number[]): number[] | undefined {
-    //     let unique: number[] = 
-    //         arr.reduce(function (acc: number[], curr: number){
-    //             if (!acc.includes(curr))
-    //                 acc.push(curr);
-    //             return acc;
-    //         }, []);
-    //         return unique;
-    //     // return this.ingredients.filter((ingredient, index) => ingredient.indexOf(ingredient) === index);
-    // }
+    public getCategory(): number[] {
+
+        this.ingredients.forEach(element => {
+            this.categories.push(element.categoryID);
+        });
+
+        return this.categories;
+    }
 }
