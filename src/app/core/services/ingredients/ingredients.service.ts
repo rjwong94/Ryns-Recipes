@@ -14,11 +14,6 @@ export class IngredientsService {
     }
 
     public getCategory(): number[] {
-
-        this.ingredients.forEach(element => {
-            this.categories.push(element.categoryID);
-        });
-
-        return this.categories;
+        return this.ingredients.map(ingredients => ingredients.categoryID);
     }
 }
