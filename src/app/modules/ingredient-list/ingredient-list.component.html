@@ -1,4 +1,7 @@
 <h1>Ingredients</h1>
+<div *ngFor="let cat of categoryNameList">
+  {{cat}}
+</div>
 
 <!-- <div *ngFor="let id of categoryID">
   <button [class.selected]="category.id === selectedIngredientId"
@@ -12,14 +15,16 @@
   </button>
 </ng-container> -->
 
-<ng-container>
+<!-- <ng-container>
   <button *ngFor="let item of categories">
     {{item.category}}
     <p>{{item.categoryID}}</p>
   </button>
 </ng-container>
 
-
+<div *ngFor="let num of categoryIDList">
+  <p>{{num}}</p>
+</div> -->
 
 <!-- <div *ngFor="let num of categoryID">
   <p>{{num}}</p>

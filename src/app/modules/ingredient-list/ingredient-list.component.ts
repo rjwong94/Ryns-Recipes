@@ -13,12 +13,12 @@ import { IngredientsService } from '../../core/services/ingredients/ingredients.
 
 export class IngredientListComponent {
   public ingredient: Ingredient[] = this._is.ingredients;
-  public categoryIDList: number[] = this._is.getCategory();
-  public categories: Ingredient[] = this.ingredient.filter(item => this.categoryIDList.includes(item.categoryID));
+  public categoryNameList: string[] = this._is.getCategory();
 
   constructor(private _is: IngredientsService) { }
 
   public selectedIngredientId!: number;
+  
   onSelect(ingredientId: number): void {
     this.selectedIngredientId = ingredientId;
   }

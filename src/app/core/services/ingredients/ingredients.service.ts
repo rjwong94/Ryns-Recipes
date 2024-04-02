@@ -1,11 +1,11 @@
 import { Injectable } from "@angular/core";
-import { INGREDIENTS } from "./ingredients.data";
-import { Ingredient } from "./ingredients.interface";
+import { CATEGORIES, INGREDIENTS } from "./ingredients.data";
+import { Category, Ingredient } from "./ingredients.interface";
 
 @Injectable({ providedIn: 'root' })
 export class IngredientsService {
     public ingredients: Ingredient[] = INGREDIENTS;
-    public categories!: number[];
+    public categories: Category[] = CATEGORIES;
 
     constructor() { }
 
@@ -13,8 +13,7 @@ export class IngredientsService {
         return this.ingredients.filter(ingredient => ingredient.id === id).at(0);
     }
 
-    public getCategory(): number[] {
-        this.categories = this.ingredients.map(ingredients => ingredients.categoryID);
-        return [...new Set(this.categories)];
+    public getCategory(): string[] {
+        return this.categories.map((element) => element.name);
     }
 }
