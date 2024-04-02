@@ -1,19 +1,26 @@
-<!-- <div *ngFor="let category of ingredient" class="ingredient-list-nav">
-  <button [class.selected]="category.id === selectedIngredientId"
-    (click)="onSelect(category.id)">{{category.category}}</button>
-</div>
--->
-
-<div *ngFor="let num of categoryID">
-  <p>{{num}}</p>
-</div>
-
-
 <h1>Ingredients</h1>
 
-<div *ngFor="let x of ingredient">
-  <h6>{{ x.name }}</h6>
-  <p>{{x.category}}</p>
-</div> 
+<!-- <div *ngFor="let id of categoryID">
+  <button [class.selected]="category.id === selectedIngredientId"
+    (click)="onSelect(category.id)">{{category.category}}</button>
+</div> -->
 
-<p>working</p>
+<!-- <ng-container *ngFor="let id of categoryID, let index = index" class="ingredient-list-nav">
+  <p>{{id}}</p>
+  <button *ngIf="ingredient[index] === id">
+    {{ingredient[id].name}}
+  </button>
+</ng-container> -->
+
+<ng-container>
+  <button *ngFor="let item of categories">
+    {{item.category}}
+    <p>{{item.categoryID}}</p>
+  </button>
+</ng-container>
+
+
+
+<!-- <div *ngFor="let num of categoryID">
+  <p>{{num}}</p>
+</div> -->

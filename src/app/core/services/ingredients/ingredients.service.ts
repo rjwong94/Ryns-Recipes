@@ -14,6 +14,7 @@ export class IngredientsService {
     }
 
     public getCategory(): number[] {
-        return this.ingredients.map(ingredients => ingredients.categoryID);
+        this.categories = this.ingredients.map(ingredients => ingredients.categoryID);
+        return [...new Set(this.categories)];
     }
 }
