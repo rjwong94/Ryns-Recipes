@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Ingredient } from '../../core/services/ingredients/ingredients.interface';
+import { Category, Ingredient } from '../../core/services/ingredients/ingredients.interface';
 import { IngredientsService } from '../../core/services/ingredients/ingredients.service';
 
 @Component({
@@ -12,8 +12,7 @@ import { IngredientsService } from '../../core/services/ingredients/ingredients.
 })
 
 export class IngredientListComponent {
-  public ingredient: Ingredient[] = this._is.ingredients;
-  public categoryNameList: string[] = this._is.getCategory();
+  public category: Category[] = this._is.categories;
 
   constructor(private _is: IngredientsService) { }
 

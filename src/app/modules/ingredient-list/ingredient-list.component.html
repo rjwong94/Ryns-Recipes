@@ -1,31 +1,16 @@
 <h1>Ingredients</h1>
-<div *ngFor="let cat of categoryNameList">
-  {{cat}}
+<div class="category-dropdown">
+  <label for="category">Category: </label>
+  <select>
+    <option *ngFor="let element of category" [value]="element">{{element.name}}</option>
+  </select>
 </div>
 
-<!-- <div *ngFor="let id of categoryID">
-  <button [class.selected]="category.id === selectedIngredientId"
-    (click)="onSelect(category.id)">{{category.category}}</button>
-</div> -->
 
-<!-- <ng-container *ngFor="let id of categoryID, let index = index" class="ingredient-list-nav">
-  <p>{{id}}</p>
-  <button *ngIf="ingredient[index] === id">
-    {{ingredient[id].name}}
+
+<!-- <h1>Ingredients</h1>
+<div *ngFor="let element of category" class="ingredient-category-list">
+  <button [class.selected]="element.id === selectedIngredientId" (click)="onSelect(element.id)">
+    {{element.name}}
   </button>
-</ng-container> -->
-
-<!-- <ng-container>
-  <button *ngFor="let item of categories">
-    {{item.category}}
-    <p>{{item.categoryID}}</p>
-  </button>
-</ng-container>
-
-<div *ngFor="let num of categoryIDList">
-  <p>{{num}}</p>
-</div> -->
-
-<!-- <div *ngFor="let num of categoryID">
-  <p>{{num}}</p>
 </div> -->
