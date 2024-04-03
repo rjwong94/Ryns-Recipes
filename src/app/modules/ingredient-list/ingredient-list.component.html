@@ -2,15 +2,10 @@
 <div class="category-dropdown">
   <label for="category">Category: </label>
   <select>
-    <option *ngFor="let element of category" [value]="element">{{element.name}}</option>
+    <!-- <select (change)="onSelect($event.target.value)"> -->
+    <option *ngFor="let element of category" [value]="element.id">{{element.name}}</option>
   </select>
 </div>
 
 
-
-<!-- <h1>Ingredients</h1>
-<div *ngFor="let element of category" class="ingredient-category-list">
-  <button [class.selected]="element.id === selectedIngredientId" (click)="onSelect(element.id)">
-    {{element.name}}
-  </button>
-</div> -->
+<app-ingredient-details></app-ingredient-details>

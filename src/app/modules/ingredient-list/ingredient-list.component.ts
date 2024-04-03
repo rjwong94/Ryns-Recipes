@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Category, Ingredient } from '../../core/services/ingredients/ingredients.interface';
+import { Category } from '../../core/services/ingredients/ingredients.interface';
 import { IngredientsService } from '../../core/services/ingredients/ingredients.service';
+import { IngredientDetailsComponent } from './ingredient-details/ingredient-details.component';
 
 @Component({
   selector: 'app-ingredient-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, IngredientDetailsComponent],
   templateUrl: './ingredient-list.component.html',
   styleUrl: './ingredient-list.component.scss'
 })
@@ -16,10 +17,10 @@ export class IngredientListComponent {
 
   constructor(private _is: IngredientsService) { }
 
-  public selectedIngredientId!: number;
+  public selectedCategoryId!: number;
   
-  onSelect(ingredientId: number): void {
-    this.selectedIngredientId = ingredientId;
+  onSelect(categoryId: number): void {
+    this.selectedCategoryId = categoryId;
   }
 
 }
