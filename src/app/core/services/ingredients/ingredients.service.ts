@@ -16,4 +16,8 @@ export class IngredientsService {
     public getCategory(id: number): Category | undefined {
         return this.categories.filter(category => category.id === id).at(0);
     }
+
+    public getIngredientByCategory(id: number): Ingredient[] {
+        return this.ingredients.filter(ingredient => ingredient.categoryID === id);
+    }
 }

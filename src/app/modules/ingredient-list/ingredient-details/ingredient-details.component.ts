@@ -21,4 +21,8 @@ export class IngredientDetailsComponent implements OnChanges {
   ngOnChanges(): void {
     this.category = this._is.getCategory(this.id);
   }
+
+  getIngredients(id: number): Ingredient[] {
+    return this._is.getIngredientByCategory(id);
+  }
 }
