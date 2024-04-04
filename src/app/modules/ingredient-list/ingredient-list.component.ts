@@ -17,11 +17,11 @@ export class IngredientListComponent {
 
   constructor(private _is: IngredientsService) { }
 
-  public selectedCategoryId!: any;
+  public selectedCategoryID!: number;
   
   onSelect(categoryId: any): void {
     categoryId = parseFloat(categoryId);
-    this.selectedCategoryId = this.category.find(item => (item.id === categoryId));
+    this.selectedCategoryID = categoryId;
   }
 
 }

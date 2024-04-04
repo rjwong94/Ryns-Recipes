@@ -13,7 +13,7 @@ export class IngredientsService {
         return this.ingredients.filter(ingredient => ingredient.id === id).at(0);
     }
 
-    public getCategory(): string[] {
-        return this.categories.map((element) => element.name);
+    public getCategory(id: number): Category | undefined {
+        return this.categories.filter(category => category.id === id).at(0);
     }
 }

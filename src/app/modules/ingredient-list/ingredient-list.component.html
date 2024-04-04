@@ -6,10 +6,10 @@
   </select>
 </div>
 
-<div *ngIf="selectedCategoryId">
-  <h3>Description</h3>
-  <p>ID: {{selectedCategoryId.id}} {{ selectedCategoryId.name }}</p>
-</div>
+<h2>Category</h2>
+
+<ng-container *ngIf="selectedCategoryID > -1">
+  <app-ingredient-details [id]="selectedCategoryID"></app-ingredient-details>
+</ng-container>
 
 
-<app-ingredient-details></app-ingredient-details>
