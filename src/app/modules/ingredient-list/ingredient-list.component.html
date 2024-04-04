@@ -1,10 +1,14 @@
 <h1>Ingredients</h1>
 <div class="category-dropdown">
   <label for="category">Category: </label>
-  <select>
-    <!-- <select (change)="onSelect($event.target.value)"> -->
+  <select #currentSelect (change)="onSelect(currentSelect.value)">
     <option *ngFor="let element of category" [value]="element.id">{{element.name}}</option>
   </select>
+</div>
+
+<div *ngIf="selectedCategoryId">
+  <h3>Description</h3>
+  <p>ID: {{selectedCategoryId.id}} {{ selectedCategoryId.name }}</p>
 </div>
 
 
