@@ -1,11 +1,12 @@
 import { Injectable } from "@angular/core";
-import { CATEGORIES, INGREDIENTS } from "./ingredients.data";
-import { Category, Ingredient } from "./ingredients.interface";
+import { CATEGORIES, INGREDIENTS, SUBCATEGORIES } from "./ingredients.data";
+import { Category, Ingredient, SubCategory } from "./ingredients.interface";
 
 @Injectable({ providedIn: 'root' })
 export class IngredientsService {
     public ingredients: Ingredient[] = INGREDIENTS;
     public categories: Category[] = CATEGORIES;
+    public subCategories: SubCategory[] = SUBCATEGORIES;
 
     constructor() { }
 
@@ -19,5 +20,13 @@ export class IngredientsService {
 
     public getIngredientByCategory(id: number): Ingredient[] {
         return this.ingredients.filter(ingredient => ingredient.categoryID === id);
+    }
+
+    public getSubCategory(id: number): SubCategory[] {
+        return this.subCategories.filter(sub => sub.categoryID === id);
+    }
+
+    public getSubCategoryByCategory(id: number): SubCategory[] {
+        return this.subCategories.filter(sub => sub.categoryID === id);
     }
 }

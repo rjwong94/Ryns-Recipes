@@ -1,4 +1,4 @@
-import { Category, Ingredient } from "./ingredients.interface";
+import { Category, Ingredient, SubCategory } from "./ingredients.interface";
 
 export const INGREDIENTS: Ingredient[] = [
   {id: 0, name: 'Chicken Thigh', categoryID: 0},
@@ -12,4 +12,10 @@ export const CATEGORIES: Category[] = [
   {id: 0, name: 'Meats, Poultry, and Seafood'},
   {id: 1, name: 'Vegetables'},
   {id: 2, name: 'Dairy'},
+]
+
+export const SUBCATEGORIES: SubCategory[] = [
+  {id: 0, name: 'Meats', categoryID: 0},
+  {id: 1, name: 'Poultry', categoryID: 0},
+  {id: 2, name: 'Seafood', categoryID: 0},
 ]

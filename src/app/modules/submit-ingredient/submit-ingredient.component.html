@@ -1,16 +1,11 @@
 <label for="category">Category: </label>
-<select (change)="categorySelect()" required name="category" id="cat-drop">
-  <select>
-    <option selected value="Meats, Poultry, and Seafood">Meats, Poultry, and Seafood</option>
-  </select>
-  <option value="Vegetables">Vegetables</option>
-  <option value="Dairy">Dairy</option>
+<select #categorySelect (change)="onSelect(categorySelect.value)">
+  <option *ngFor="let element of category" [value]="element.id">{{element.name}}</option>
 </select>
 
 <br>
 
-<label for="test">Test: </label>
-<select>
-  <option>--Select--</option>
-  <option *ngFor="let ingredient of INGREDIENTS">{{ingredient}}</option>
-</select>
+<label for="sub-category">Sub Category: </label>
+  <select>
+    <option *ngFor="let sub of getSubCategories(selectCategoryID)">{{sub.name}}</option>
+  </select>

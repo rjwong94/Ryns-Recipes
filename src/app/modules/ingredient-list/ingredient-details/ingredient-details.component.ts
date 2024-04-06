@@ -13,7 +13,6 @@ import { CommonModule } from '@angular/common';
 })
 export class IngredientDetailsComponent implements OnChanges {
   @Input() id!: number;
-  public ingredient!: Ingredient | undefined;
   public category!: Category | undefined;
 
   constructor(private _is: IngredientsService) {};
