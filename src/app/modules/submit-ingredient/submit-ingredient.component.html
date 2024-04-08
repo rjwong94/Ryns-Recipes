@@ -1,11 +1,15 @@
-<label for="category">Category: </label>
-<select #categorySelect (change)="onSelect(categorySelect.value)">
-  <option *ngFor="let element of category" [value]="element.id">{{element.name}}</option>
-</select>
+<div>
+  <label for="category">Category: </label>
+  <select #categorySelect (change)="onSelect(categorySelect.value)">
+    <option *ngFor="let element of category" [value]="element.id">{{element.name}}</option>
+  </select>
 
-<br>
+  <br>
 
-<label for="sub-category">Sub Category: </label>
+  <label for="sub-category">Sub Category: </label>
   <select>
     <option *ngFor="let sub of getSubCategories(selectCategoryID)">{{sub.name}}</option>
   </select>
+</div>
+
+<app-ingredient-form></app-ingredient-form>
