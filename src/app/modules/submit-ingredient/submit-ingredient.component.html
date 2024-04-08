@@ -12,4 +12,6 @@
   </select>
 </div>
 
-<app-ingredient-form></app-ingredient-form>
+<ng-container *ngIf="selectCategoryID > -1">
+  <app-ingredient-form></app-ingredient-form>
+</ng-container>
