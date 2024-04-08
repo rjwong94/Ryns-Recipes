@@ -14,7 +14,6 @@ import { IngredientFormComponent } from './ingredient-form/ingredient-form.compo
 export class SubmitIngredientComponent {
   public category: Category[] = this._is.categories;
   public subCategory: SubCategory[] = this._is.subCategories;
-  public ingredient!: Ingredient;
   constructor (private _is: IngredientsService) {}; 
 
   public selectCategoryID!: number;
