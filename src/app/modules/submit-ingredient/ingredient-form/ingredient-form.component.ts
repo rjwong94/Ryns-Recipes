@@ -12,7 +12,7 @@ import { IngredientsService } from '../../../core/services/ingredients/ingredien
 })
 export class IngredientFormComponent {
   @Input() id!: number;
-  public ingredient: Ingredient = {id: this._is.ingredients.length, name: 'Type Ingredient Name Here', categoryID: this.id}
+  public ingredient: Ingredient = {id: this._is.ingredients.length, name: '', categoryID: this.id}
   
   constructor(private _is: IngredientsService) { };
 }
