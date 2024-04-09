@@ -29,4 +29,11 @@ export class IngredientsService {
     public getSubCategoryByCategory(id: number): SubCategory[] {
         return this.subCategories.filter(sub => sub.categoryID === id);
     }
+
+    public addIngredient(existingIngredients: Ingredient, newIngredient: Ingredient): Ingredient {
+        return {
+            ...existingIngredients,
+            ...newIngredient
+        };
+    }
 }

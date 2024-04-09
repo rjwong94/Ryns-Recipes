@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Ingredient } from '../../../core/services/ingredients/ingredients.interface';
 import { IngredientsService } from '../../../core/services/ingredients/ingredients.service';
@@ -11,7 +11,8 @@ import { IngredientsService } from '../../../core/services/ingredients/ingredien
   styleUrl: './ingredient-form.component.scss'
 })
 export class IngredientFormComponent {
-  public ingredient: Ingredient = {id: 5, name: 'Chicken Wing', categoryID: 0}
+  @Input() id!: number;
+  public ingredient: Ingredient = {id: this._is.ingredients.length, name: 'Type Ingredient Name Here', categoryID: this.id}
   
   constructor(private _is: IngredientsService) { };
 }
