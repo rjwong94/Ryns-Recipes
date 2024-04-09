@@ -12,6 +12,7 @@ import { IngredientsService } from '../../../core/services/ingredients/ingredien
 })
 export class IngredientFormComponent {
   @Input() id!: number;
+  @Input() subId!: number;
   public ingredient: Ingredient = {id: this._is.ingredients.length, name: '', categoryID: this.id}
   
   constructor(private _is: IngredientsService) { };

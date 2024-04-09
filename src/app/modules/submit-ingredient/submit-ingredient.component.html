@@ -8,10 +8,14 @@
 
   <label for="sub-category">Sub Category: </label>
   <select #subcategorySelect (change)="onSubCatSelect(subcategorySelect.value)">
-    <option *ngFor="let sub of getSubCategories(selectCategoryID)" [value]="sub.id">{{sub.name}}</option>
+    <option [value]="-1">None</option>
+    <option *ngFor="let sub of getSubCategories(selectCategoryID)" [value]="sub.id">{{sub.name}} {{sub.id}} {{selectSubCategoryID}}</option>
   </select>
 </div>
 
-<ng-container *ngIf="selectCategoryID > -1">
+<ng-container *ngIf="selectCategoryID > -1 && selectSubCategoryID === -1; else second">
   <app-ingredient-form [id]="selectCategoryID"></app-ingredient-form>
 </ng-container>
+<ng-template #second>
+  <app-ingredient-form [id]="selectCategoryID" [subId]="selectSubCategoryID"></app-ingredient-form>
+</ng-template>

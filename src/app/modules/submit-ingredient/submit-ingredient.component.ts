@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnChanges, SimpleChanges } from '@angular/core';
 import { Category, SubCategory, Ingredient } from '../../core/services/ingredients/ingredients.interface';
 import { CommonModule } from '@angular/common';
 import { IngredientsService } from '../../core/services/ingredients/ingredients.service';
@@ -11,7 +11,7 @@ import { IngredientFormComponent } from './ingredient-form/ingredient-form.compo
   templateUrl: './submit-ingredient.component.html',
   styleUrl: './submit-ingredient.component.scss'
 })
-export class SubmitIngredientComponent {
+export class SubmitIngredientComponent implements OnChanges{
   public category: Category[] = this._is.categories;
   public subCategory: SubCategory[] = this._is.subCategories;
   constructor (private _is: IngredientsService) {}; 
@@ -31,6 +31,10 @@ export class SubmitIngredientComponent {
 
   getSubCategories(id: number): SubCategory[] {
     return this._is.getSubCategoryByCategory(id);
+  }
+
+  ngOnChanges(): void {
+
   }
 }
 
