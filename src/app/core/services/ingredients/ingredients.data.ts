@@ -18,4 +18,9 @@ export const SUBCATEGORIES: SubCategory[] = [
   {id: 0, name: 'Meats', categoryID: 0},
   {id: 1, name: 'Poultry', categoryID: 0},
   {id: 2, name: 'Seafood', categoryID: 0},
+  {id: 3, name: 'Beans and Peas', categoryID: 1},
+  {id: 4, name: 'Starchy Vegetables', categoryID: 1},
+  {id: 5, name: 'Other', categoryID: 1},
+  {id: 6, name: 'Milk and Yogurt', categoryID: 2},
+  {id: 7, name: 'Cheese', categoryID: 2},
 ]
