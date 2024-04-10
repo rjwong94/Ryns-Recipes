@@ -30,7 +30,7 @@ export class IngredientsService {
         return this.subCategories.filter(sub => sub.categoryID === id);
     }
 
-    public addIngredient(existingIngredients: Ingredient, newIngredient: Ingredient): Ingredient {
+    public addIngredient(existingIngredients: Ingredient[], newIngredient: Ingredient): Ingredient {
         return {
             ...existingIngredients,
             ...newIngredient

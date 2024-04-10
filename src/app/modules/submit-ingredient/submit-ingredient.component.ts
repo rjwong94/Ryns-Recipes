@@ -16,9 +16,16 @@ export class SubmitIngredientComponent {
   public subCategory: SubCategory[] = this._is.subCategories;
   constructor (private _is: IngredientsService) {}; 
 
-  public selectCategoryID!: number;
+  public selectCategoryID: number = 0;
   public selectSubCategoryID!: number | null;
   public ingredient: Ingredient = {id: this._is.ingredients.length, name: '', categoryID: this.selectCategoryID}
+
+  submitted = false;
+
+  onSubmit() { 
+    this.submitted = true;
+    return this._is.addIngredient(this._is.ingredients,this.ingredient);
+   }
 
   onCatSelect(value: any): void {
     value = parseFloat(value);

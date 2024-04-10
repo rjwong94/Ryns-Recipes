@@ -1,5 +1,5 @@
 <div>
-  <form #heroForm="ngForm">
+  <form (ngSubmit)="onSubmit()" #ingredientForm="ngForm">
     <label for="category">Category: </label>
     <select #categorySelect (change)="onCatSelect(categorySelect.value)">
       <option *ngFor="let element of category" [value]="element.id">{{element.name}}</option>
@@ -19,6 +19,8 @@
     <div [hidden]="name.valid" class="alert alert-danger">
       Name is required
     </div>
+
+    <button type="submit" [disabled]="!ingredientForm.form.valid">Submit</button>
   </form>
 
   <p>TODO: remove this: {{ingredient.name}} {{selectCategoryID}} {{selectSubCategoryID}}</p>
