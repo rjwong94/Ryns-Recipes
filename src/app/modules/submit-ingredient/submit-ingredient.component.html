@@ -1,21 +1,32 @@
 <div>
-  <label for="category">Category: </label>
-  <select #categorySelect (change)="onCatSelect(categorySelect.value)">
-    <option *ngFor="let element of category" [value]="element.id">{{element.name}}</option>
-  </select>
+  <form #heroForm="ngForm">
+    <label for="category">Category: </label>
+    <select #categorySelect (change)="onCatSelect(categorySelect.value)">
+      <option *ngFor="let element of category" [value]="element.id">{{element.name}}</option>
+    </select>
 
-  <br>
+    <br>
 
-  <label for="sub-category">Sub Category: </label>
-  <select #subcategorySelect (change)="onSubCatSelect(subcategorySelect.value)">
-    <option [value]="-1">None</option>
-    <option *ngFor="let sub of getSubCategories(selectCategoryID)" [value]="sub.id">{{sub.name}} {{sub.id}} {{selectSubCategoryID}}</option>
-  </select>
+    <label for="sub-category">Sub Category: </label>
+    <select #subcategorySelect (change)="onSubCatSelect(subcategorySelect.value)">
+      <option [value]="">None</option>
+      <option *ngFor="let sub of getSubCategories(selectCategoryID)" [value]="sub.id">{{sub.name}}</option>
+    </select>
+
+
+    <input type="text" class="form-control" id="name" required [(ngModel)]="ingredient.name" name="name"
+      #name="ngModel">
+    <div [hidden]="name.valid" class="alert alert-danger">
+      Name is required
+    </div>
+  </form>
+
+  <p>TODO: remove this: {{ingredient.name}} {{selectCategoryID}} {{selectSubCategoryID}}</p>
 </div>
 
-<ng-container *ngIf="selectCategoryID > -1 && selectSubCategoryID === -1; else second">
+<!-- <ng-container *ngIf="selectCategoryID > -1 && selectSubCategoryID === -1; else second">
   <app-ingredient-form [id]="selectCategoryID"></app-ingredient-form>
 </ng-container>
 <ng-template #second>
   <app-ingredient-form [id]="selectCategoryID" [subId]="selectSubCategoryID"></app-ingredient-form>
-</ng-template>
+</ng-template> -->

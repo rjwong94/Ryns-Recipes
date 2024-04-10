@@ -1,27 +1,29 @@
-import { Component, OnChanges, SimpleChanges } from '@angular/core';
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { Category, SubCategory, Ingredient } from '../../core/services/ingredients/ingredients.interface';
 import { CommonModule } from '@angular/common';
 import { IngredientsService } from '../../core/services/ingredients/ingredients.service';
-import { IngredientFormComponent } from './ingredient-form/ingredient-form.component';
 
 @Component({
   selector: 'app-submit-ingredient',
   standalone: true,
-  imports: [CommonModule, IngredientFormComponent],
+  imports: [CommonModule, FormsModule],
   templateUrl: './submit-ingredient.component.html',
   styleUrl: './submit-ingredient.component.scss'
 })
-export class SubmitIngredientComponent implements OnChanges{
+export class SubmitIngredientComponent {
   public category: Category[] = this._is.categories;
   public subCategory: SubCategory[] = this._is.subCategories;
   constructor (private _is: IngredientsService) {}; 
 
   public selectCategoryID!: number;
-  public selectSubCategoryID!: number;
+  public selectSubCategoryID!: number | null;
+  public ingredient: Ingredient = {id: this._is.ingredients.length, name: '', categoryID: this.selectCategoryID}
 
   onCatSelect(value: any): void {
     value = parseFloat(value);
     this.selectCategoryID = value;
+    this.selectSubCategoryID = null;
   }
 
   onSubCatSelect(value: any): void {
@@ -31,10 +33,6 @@ export class SubmitIngredientComponent implements OnChanges{
 
   getSubCategories(id: number): SubCategory[] {
     return this._is.getSubCategoryByCategory(id);
-  }
-
-  ngOnChanges(): void {
-
   }
 }
 
