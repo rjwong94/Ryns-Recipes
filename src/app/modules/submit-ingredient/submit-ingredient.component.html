@@ -1,4 +1,31 @@
 <div>
+  <form [formGroup]="ingredientForm">
+    <label for="category">Category: </label>
+    <select #categorySelect (change)="onCatSelect(categorySelect.value)" formControlName="categoryName">
+      <option *ngFor="let element of category" [value]="element.id">{{element.name}}</option>
+    </select>
+
+    <br>
+
+    <label for="sub-category">Sub Category: </label>
+    <select #subcategorySelect (change)="onSubCatSelect(subcategorySelect.value)" formControlName="subcategoryName">
+      <option [value]="">None</option>
+      <option *ngFor="let sub of getSubCategories(selectCategoryID)" [value]="sub.id">{{sub.name}}</option>
+    </select>
+
+
+    <input type="text" class="form-control" id="name" formControlName="ingredientName">
+    <div [hidden]="ingredientForm.valid" class="alert alert-danger">
+      Name is required
+    </div>
+
+    <!-- <button type="submit" [disabled]="!ingredientForm.form.valid">Submit</button> -->
+
+  </form>
+  <p>TODO: remove this: {{ingredientForm}} {{selectCategoryID}} {{selectSubCategoryID}}</p>
+</div>
+
+<!-- <div>
   <form (ngSubmit)="onSubmit()" #ingredientForm="ngForm">
     <label for="category">Category: </label>
     <select #categorySelect (change)="onCatSelect(categorySelect.value)">
@@ -24,5 +51,4 @@
   </form>
 
   <p>TODO: remove this: {{ingredient.name}} {{selectCategoryID}} {{selectSubCategoryID}}</p>
-</div>
-
+</div> -->

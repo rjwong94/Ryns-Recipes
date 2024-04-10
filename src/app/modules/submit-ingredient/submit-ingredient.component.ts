@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Category, SubCategory, Ingredient } from '../../core/services/ingredients/ingredients.interface';
 import { CommonModule } from '@angular/common';
 import { IngredientsService } from '../../core/services/ingredients/ingredients.service';
@@ -7,11 +7,17 @@ import { IngredientsService } from '../../core/services/ingredients/ingredients.
 @Component({
   selector: 'app-submit-ingredient',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './submit-ingredient.component.html',
   styleUrl: './submit-ingredient.component.scss'
 })
 export class SubmitIngredientComponent {
+  ingredientForm = new FormGroup({
+    ingredientName: new FormControl(''),
+    categoryName: new FormControl(''),
+    subcategoryName: new FormControl(''),
+  });
+  
   public category: Category[] = this._is.categories;
   public subCategory: SubCategory[] = this._is.subCategories;
   constructor (private _is: IngredientsService) {}; 
