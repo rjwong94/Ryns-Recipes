@@ -1,16 +1,16 @@
 <div>
   <form [formGroup]="ingredientForm">
     <label for="category">Category: </label>
-    <select #categorySelect (change)="onCatSelect(categorySelect.value)" formControlName="categoryName">
+    <select #categorySelect (change)="onCatSelect(categorySelect.value)" formControlName="categorySelect">
       <option *ngFor="let element of category" [value]="element.id">{{element.name}}</option>
     </select>
 
     <br>
 
     <label for="sub-category">Sub Category: </label>
-    <select #subcategorySelect (change)="onSubCatSelect(subcategorySelect.value)" formControlName="subcategoryName">
+    <select #subcategorySelect (change)="onSubCatSelect(subcategorySelect.value)" formControlName="subcategorySelect">
       <option [value]="">None</option>
-      <option *ngFor="let sub of getSubCategories(selectCategoryID)" [value]="sub.id">{{sub.name}}</option>
+      <option *ngFor="let sub of getSubCategories(ingredientForm.get('categorySelect')?.value)" [value]="sub.id">{{sub.name}}</option>
     </select>
 
 
@@ -22,7 +22,7 @@
     <!-- <button type="submit" [disabled]="!ingredientForm.form.valid">Submit</button> -->
 
   </form>
-  <p>TODO: remove this: {{ingredientForm}} {{selectCategoryID}} {{selectSubCategoryID}}</p>
+  <p>TODO: remove this: {{ingredientForm.get('categorySelect')?.value}} {{selectSubCategoryID}}</p>
 </div>
 
 <!-- <div>

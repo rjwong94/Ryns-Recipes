@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { ReactiveFormsModule, FormBuilder, FormControl } from '@angular/forms';
 import { Category, SubCategory, Ingredient } from '../../core/services/ingredients/ingredients.interface';
 import { CommonModule } from '@angular/common';
 import { IngredientsService } from '../../core/services/ingredients/ingredients.service';
@@ -11,31 +11,52 @@ import { IngredientsService } from '../../core/services/ingredients/ingredients.
   templateUrl: './submit-ingredient.component.html',
   styleUrl: './submit-ingredient.component.scss'
 })
-export class SubmitIngredientComponent {
-  ingredientForm = new FormGroup({
-    ingredientName: new FormControl(''),
-    categoryName: new FormControl(''),
-    subcategoryName: new FormControl(''),
-  });
-  
+export class SubmitIngredientComponent implements OnInit {
+  // ingredientForm = this.formBuilder.group({
+  //   categorySelect: [''],
+  //   subcategorySelect: [''],
+  //   ingredientName: [''],
+  // })
+
+
   public category: Category[] = this._is.categories;
   public subCategory: SubCategory[] = this._is.subCategories;
-  constructor (private _is: IngredientsService) {}; 
+
+  ingredientForm = this.formBuilder.group({
+    categorySelect: [''],
+    subcategorySelect: [''],
+    ingredientName: [''],
+  })
+
+  constructor(
+    private _is: IngredientsService,
+    private formBuilder: FormBuilder
+  ) { };
+
 
   public selectCategoryID: number = 0;
   public selectSubCategoryID!: number | null;
-  public ingredient: Ingredient = {id: this._is.ingredients.length, name: '', categoryID: this.selectCategoryID}
+  public ingredient: Ingredient = { id: this._is.ingredients.length, name: '', categoryID: this.selectCategoryID }
+
 
   submitted = false;
 
-  onSubmit() { 
+  ngOnInit() {
+    this.ingredientForm = this.formBuilder.group({
+      categorySelect: ['0'],
+      subcategorySelect: [''],
+      ingredientName: [''],
+    });
+  }
+
+  onSubmit() {
     this.submitted = true;
-    return this._is.addIngredient(this._is.ingredients,this.ingredient);
-   }
+    return this._is.addIngredient(this._is.ingredients, this.ingredient);
+  }
 
   onCatSelect(value: any): void {
     value = parseFloat(value);
-    this.selectCategoryID = value;
+    this.ingredientForm.get('categorySelect')?.setValue(value);
     this.selectSubCategoryID = null;
   }
 
@@ -44,7 +65,8 @@ export class SubmitIngredientComponent {
     this.selectSubCategoryID = value;
   }
 
-  getSubCategories(id: number): SubCategory[] {
+  getSubCategories(id: any): SubCategory[] {
+    id = parseFloat(id);
     return this._is.getSubCategoryByCategory(id);
   }
 }
