@@ -11,15 +11,15 @@ import { CommonModule } from '@angular/common';
   templateUrl: './ingredient-details.component.html',
   styleUrl: './ingredient-details.component.scss'
 })
-export class IngredientDetailsComponent implements OnChanges {
+export class IngredientDetailsComponent{
   @Input() id!: number;
   public category!: Category | undefined;
 
   constructor(private _is: IngredientsService) {};
 
-  ngOnChanges(): void {
-    this.category = this._is.getCategory(this.id);
-  }
+  // ngOnChanges(): void {
+  //   this.category = this._is.getCategory(this.id);
+  // }
 
   getIngredients(id: number): Ingredient[] {
     return this._is.getIngredientByCategory(id);

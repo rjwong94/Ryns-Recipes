@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ReactiveFormsModule, FormBuilder, FormControl } from '@angular/forms';
+import { ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Category, SubCategory, Ingredient } from '../../core/services/ingredients/ingredients.interface';
 import { CommonModule } from '@angular/common';
 import { IngredientsService } from '../../core/services/ingredients/ingredients.service';
+import { Observable, startWith, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-submit-ingredient',
@@ -11,64 +12,44 @@ import { IngredientsService } from '../../core/services/ingredients/ingredients.
   templateUrl: './submit-ingredient.component.html',
   styleUrl: './submit-ingredient.component.scss'
 })
-export class SubmitIngredientComponent implements OnInit {
-  // ingredientForm = this.formBuilder.group({
-  //   categorySelect: [''],
-  //   subcategorySelect: [''],
-  //   ingredientName: [''],
-  // })
+export class SubmitIngredientComponent {
+  public categories$: Observable<Category[]>;
+  // public subCategories$: Observable<SubCategory[]>;
 
-
-  public category: Category[] = this._is.categories;
-  public subCategory: SubCategory[] = this._is.subCategories;
-
-  ingredientForm = this.formBuilder.group({
-    categorySelect: [''],
-    subcategorySelect: [''],
-    ingredientName: [''],
+  public ingredientForm: FormGroup = new FormGroup({
+    categoryId: new FormControl(0),
+    subCategoryId: new FormControl(0),
+    name: new FormControl('', [Validators.required]),
   })
 
-  constructor(
-    private _is: IngredientsService,
-    private formBuilder: FormBuilder
-  ) { };
-
-
-  public selectCategoryID: number = 0;
-  public selectSubCategoryID!: number | null;
-  public ingredient: Ingredient = { id: this._is.ingredients.length, name: '', categoryID: this.selectCategoryID }
-
-
-  submitted = false;
-
-  ngOnInit() {
-    this.ingredientForm = this.formBuilder.group({
-      categorySelect: ['0'],
-      subcategorySelect: [''],
-      ingredientName: [''],
-    });
+  private get _categoryIdForm(): FormControl<number> {
+    return this.ingredientForm.get('categoryID') as FormControl<number>;
   }
 
-  onSubmit() {
-    this.submitted = true;
-    return this._is.addIngredient(this._is.ingredients, this.ingredient);
+  private get _categoryId(): number {
+    return this._categoryIdForm?.value;
   }
 
-  onCatSelect(value: any): void {
-    value = parseFloat(value);
-    this.ingredientForm.get('categorySelect')?.setValue(value);
-    this.selectSubCategoryID = null;
+  private get _subCategoryIdForm(): FormControl<number | undefined> {
+    return this.ingredientForm.get('subCategoryId') as FormControl<number>;
   }
 
-  onSubCatSelect(value: any): void {
-    value = parseFloat(value);
-    this.selectSubCategoryID = value;
-  }
-
-  getSubCategories(id: any): SubCategory[] {
-    id = parseFloat(id);
-    return this._is.getSubCategoryByCategory(id);
-  }
+  constructor(private _is: IngredientsService) {
+    this.categories$ = this._is.categories$;
+    // this.subCategories$ = this._categoryIdForm.valueChanges.pipe(
+    //   startWith(this._categoryId),
+    //   switchMap(categoryId => this._is.getSubCategoryByCategory(categoryId)),
+    //   tap(subCategories => {
+    //     if(subCategories.length === 0) {
+    //       this._subCategoryIdForm.patchValue(undefined);
+    //       this._subCategoryIdForm.disable();
+    //     } else {
+    //       this._subCategoryIdForm.patchValue(0);
+    //       this._subCategoryIdForm.enable();
+    //     }
+    //   }),
+    // )
+  };
 }
 
 
