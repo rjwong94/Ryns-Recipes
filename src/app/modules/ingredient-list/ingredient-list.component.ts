@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Category, SubCategory } from '../../core/services/ingredients/ingredients.interface';
 import { IngredientsService } from '../../core/services/ingredients/ingredients.service';
 import { IngredientDetailsComponent } from './ingredient-details/ingredient-details.component';
-import { Observable, startWith, switchMap } from 'rxjs';
+import { Observable, startWith, switchMap, tap } from 'rxjs';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
@@ -16,7 +16,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 export class IngredientListComponent {
   category$: Observable<Category[]>;
-  subcategory$: Observable<SubCategory[] | undefined>;
+  subcategory$!: Observable<SubCategory[] | undefined>;
 
   public categoryForm: FormGroup = new FormGroup ({
     categoryId: new FormControl(0),
@@ -27,12 +27,29 @@ export class IngredientListComponent {
     return this.categoryForm.get('categoryId') as FormControl<number>;
   }
 
+  private get _categoryId(): number {
+    return this._categoryIdForm?.value;
+  }
+
+  private get _subCategoryIdForm(): FormControl<number | undefined> {
+    return this.categoryForm.get('subCategoryId') as FormControl<number | undefined>;
+  }
+
   // Although no errors, the subcategory is not handling properly. It is displaying the subcategoires for the default category, but shows nothing on change of category
   constructor(private _is: IngredientsService) {
     this.category$ = this._is.categories$;
     this.subcategory$ = this._categoryIdForm.valueChanges.pipe(
-      startWith(this._categoryIdForm.value),
+      startWith(this._categoryId),
       switchMap(categoryId => this._is.getSubCategoryByCategory(categoryId)),
+      tap(subCategories => {
+        if(subCategories.length === 0) {
+          this._subCategoryIdForm.patchValue(undefined);
+          this._subCategoryIdForm.disable();
+        }
+        else {
+          this._subCategoryIdForm.enable();
+        }
+      })
     );
   }
 
