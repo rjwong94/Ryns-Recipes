@@ -4,12 +4,12 @@ import { Category, SubCategory } from '../../core/services/ingredients/ingredien
 import { IngredientsService } from '../../core/services/ingredients/ingredients.service';
 import { IngredientDetailsComponent } from './ingredient-details/ingredient-details.component';
 import { Observable, startWith, switchMap, tap } from 'rxjs';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-ingredient-list',
   standalone: true,
-  imports: [CommonModule, IngredientDetailsComponent, ReactiveFormsModule, AsyncPipe],
+  imports: [CommonModule, IngredientDetailsComponent, ReactiveFormsModule, AsyncPipe, FormsModule],
   templateUrl: './ingredient-list.component.html',
   styleUrl: './ingredient-list.component.scss'
 })
@@ -48,6 +48,7 @@ export class IngredientListComponent {
           this._subCategoryIdForm.disable();
         }
         else {
+          this._subCategoryIdForm.patchValue(0);
           this._subCategoryIdForm.enable();
         }
       })

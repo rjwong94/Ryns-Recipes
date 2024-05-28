@@ -3,21 +3,26 @@
 <h2>Category</h2>
 
 <form [formGroup]="categoryForm">
-<div class="category-dropdown">
-  <label for="category">Category: </label>
-  <select formControlName="categoryId" name="categorySelect">
-    <option *ngFor="let category of category$ | async" [value]="category.id">{{category.name}}</option>
-  </select>
-
-  <label for="subcategory">Sub Category: </label>
-  <select formControlName="subCategoryId" name="subCategorySelect">
-    <option *ngFor="let subcategory of subcategory$ | async" [value]="subcategory.id">{{subcategory.name}}</option>
-  </select>
-</div>
+  <fieldset>
+    <div class="category-dropdown">
+      <label for="category">Category: </label>
+      <select formControlName="categoryId" name="categorySelect">
+        <option *ngFor="let category of (category$ | async)" [value]="category.id">
+          {{category.name}}
+        </option>
+      </select>
+    </div>
+    <div class="subcategory-dropdown">
+      <label for="subcategory">Sub Category: </label>
+      <select formControlName="subCategoryId" name="subCategorySelect">
+        <option *ngFor="let subcategory of (subcategory$ | async)" [value]="subcategory.id">
+          {{subcategory.name}}
+        </option>
+      </select>
+    </div>
+  </fieldset>
 </form>
 
 <!-- <ng-container *ngIf="selectedCategoryID > -1">
   <app-ingredient-details [id]="selectedCategoryID"></app-ingredient-details>
 </ng-container> -->
-
-

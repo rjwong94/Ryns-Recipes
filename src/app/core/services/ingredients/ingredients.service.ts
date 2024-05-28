@@ -10,8 +10,6 @@ export class IngredientsService {
     public categories$: Observable<Category[]> = this._categories$.asObservable();
     public _subCategories$: BehaviorSubject<SubCategory[]> = new BehaviorSubject(SUBCATEGORIES);
     public subCategories$: Observable<SubCategory[]> = this._subCategories$.asObservable();
-    public subCategories: SubCategory[] = SUBCATEGORIES;
-    public categories: Category[] = CATEGORIES;
 
     constructor() { }
 
@@ -27,10 +25,6 @@ export class IngredientsService {
 
     public getIngredientByCategory(id: number): Ingredient[] {
         return this.ingredients.filter(ingredient => ingredient.categoryID === id);
-    }
-
-    public getSubCategory(id: number): SubCategory[] {
-        return this.subCategories.filter(sub => sub.categoryID === id);
     }
 
     public getSubCategoryByCategory(id: number): Observable<SubCategory[]> {
