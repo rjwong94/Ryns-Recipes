@@ -1,11 +1,13 @@
 import { Injectable } from "@angular/core";
 import { CATEGORIES, INGREDIENTS, SUBCATEGORIES } from "./ingredients.data";
 import { Category, Ingredient, SubCategory } from "./ingredients.interface";
-import { BehaviorSubject, Observable, map } from "rxjs";
+import { BehaviorSubject, Observable, map, of } from "rxjs";
 
 @Injectable({ providedIn: 'root' })
 export class IngredientsService {
     public ingredients: Ingredient[] = INGREDIENTS;
+    public _ingredients$: BehaviorSubject<Ingredient[]> = new BehaviorSubject(INGREDIENTS);
+    public ingredients$: Observable<Ingredient[]> = this._ingredients$.asObservable();
     public _categories$: BehaviorSubject<Category[]> = new BehaviorSubject(CATEGORIES);
     public categories$: Observable<Category[]> = this._categories$.asObservable();
     public _subCategories$: BehaviorSubject<SubCategory[]> = new BehaviorSubject(SUBCATEGORIES);
@@ -15,6 +17,24 @@ export class IngredientsService {
 
     public getIngredient(id: number): Ingredient | undefined {
         return this.ingredients.filter(ingredient => ingredient.id === id).at(0);
+    }
+
+    public getIngredientById(categoryId: number, subcategoryId?: number): Observable<Ingredient[]> {
+        if (subcategoryId){
+            return this.ingredients$.pipe(
+                map(ingredients => ingredients.filter(
+                    value => value.categoryID === categoryId && value.subcategoryID === subcategoryId
+                ))
+            )
+        }
+        
+        else{
+            return this.ingredients$.pipe(
+                map(ingredients => ingredients.filter(
+                    value => value.categoryID === categoryId
+                ))
+            );
+        }
     }
 
     public getCategory(id: number): Observable<Category | undefined> {
@@ -31,12 +51,5 @@ export class IngredientsService {
         return this.subCategories$.pipe(
             map(subCategory => subCategory.filter(subCategoryId => subCategoryId.categoryID === categoryId))
         );
-    }
-
-    public addIngredient(existingIngredients: Ingredient[], newIngredient: Ingredient): Ingredient {
-        return {
-            ...existingIngredients,
-            ...newIngredient
-        };
     }
 }

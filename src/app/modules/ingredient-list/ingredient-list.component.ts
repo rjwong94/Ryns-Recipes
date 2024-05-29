@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule, AsyncPipe } from '@angular/common';
-import { Category, SubCategory } from '../../core/services/ingredients/ingredients.interface';
+import { Category, SubCategory, Ingredient } from '../../core/services/ingredients/ingredients.interface';
 import { IngredientsService } from '../../core/services/ingredients/ingredients.service';
 import { IngredientDetailsComponent } from './ingredient-details/ingredient-details.component';
 import { Observable, startWith, switchMap, tap } from 'rxjs';
@@ -17,6 +17,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, FormsModule } from '@angul
 export class IngredientListComponent {
   category$: Observable<Category[]>;
   subcategory$!: Observable<SubCategory[] | undefined>;
+  ingredient$!: Observable<Ingredient[] | undefined>;
 
   public categoryForm: FormGroup = new FormGroup({
     categoryId: new FormControl(0),
@@ -39,6 +40,7 @@ export class IngredientListComponent {
   constructor(private _is: IngredientsService) {
     this.category$ = this._is.categories$;
     //The issue may be happening somewhere below here, as the form correctly starts defaulted to form control 0. Once the category is changed is when the subcategory becomes unresponsive
+    
     this.subcategory$ = this._categoryIdForm.valueChanges.pipe(
       startWith(this._categoryId),
       switchMap(categoryId => this._is.getSubCategoryByCategory(categoryId)),
@@ -52,6 +54,11 @@ export class IngredientListComponent {
           this._subCategoryIdForm.enable();
         }
       })
+    )
+
+    this.ingredient$ = this.categoryForm.valueChanges.pipe(
+      startWith(this.categoryForm.value),
+      switchMap(value => this._is.getIngredientById(value.categoryId, value.subcategoryId))
     );
   }
 

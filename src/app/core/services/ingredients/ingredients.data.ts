@@ -6,6 +6,7 @@ export const INGREDIENTS: Ingredient[] = [
   {id: 2, name: 'Garlic', categoryID: 1},
   {id: 3, name: 'Yellow Onion', categoryID: 1},
   {id: 4, name: 'Unsalted Butter', categoryID: 2, subcategoryID: 6},
+  {id: 5, name: 'Tilapia', categoryID: 0, subcategoryID: 2},
 ];
 
 export const CATEGORIES: Category[] = [

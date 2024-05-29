@@ -12,6 +12,7 @@
         </option>
       </select>
     </div>
+
     <div class="subcategory-dropdown">
       <label for="subcategory">Sub Category: </label>
       <select formControlName="subCategoryId" name="subCategorySelect">
@@ -20,8 +21,17 @@
         </option>
       </select>
     </div>
+
+    <div class="ingredients-list">
+      <label for="ingredients">Ingredients: </label>
+      <ng-container *ngFor="let ingredient of (ingredient$ | async)">
+          {{ingredient.name}}
+      </ng-container>
+    </div>
   </fieldset>
 </form>
+
+
 
 <!-- <ng-container *ngIf="selectedCategoryID > -1">
   <app-ingredient-details [id]="selectedCategoryID"></app-ingredient-details>
