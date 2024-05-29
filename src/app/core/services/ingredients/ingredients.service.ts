@@ -27,9 +27,9 @@ export class IngredientsService {
         return this.ingredients.filter(ingredient => ingredient.categoryID === id);
     }
 
-    public getSubCategoryByCategory(id: number): Observable<SubCategory[]> {
+    public getSubCategoryByCategory(categoryId: number): Observable<SubCategory[]> {
         return this.subCategories$.pipe(
-            map(subCategory => subCategory.filter(subCategoryId => subCategoryId.categoryID === id))
+            map(subCategory => subCategory.filter(subCategoryId => subCategoryId.categoryID === categoryId))
         );
     }
 
