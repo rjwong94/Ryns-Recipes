@@ -25,7 +25,7 @@
     <div class="ingredients-list">
       <label for="ingredients">Ingredients: </label>
       <ng-container *ngFor="let ingredient of (ingredient$ | async)">
-          {{ingredient.name}}
+          <ul>{{ingredient.name}}</ul>
       </ng-container>
     </div>
   </fieldset>

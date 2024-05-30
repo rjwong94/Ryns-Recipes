@@ -18,6 +18,8 @@ export class IngredientListComponent {
   category$: Observable<Category[]>;
   subcategory$!: Observable<SubCategory[] | undefined>;
   ingredient$!: Observable<Ingredient[] | undefined>;
+  // currentCategoryId: number;
+  // currentSubCategoryId!: number;
 
   public categoryForm: FormGroup = new FormGroup({
     categoryId: new FormControl(0),
@@ -36,11 +38,9 @@ export class IngredientListComponent {
     return this._categoryIdForm?.value;
   }
 
-  // Although no errors, the subcategory is not handling properly. It is displaying the subcategoires for the default category, but shows nothing on change of category
   constructor(private _is: IngredientsService) {
     this.category$ = this._is.categories$;
-    //The issue may be happening somewhere below here, as the form correctly starts defaulted to form control 0. Once the category is changed is when the subcategory becomes unresponsive
-    
+
     this.subcategory$ = this._categoryIdForm.valueChanges.pipe(
       startWith(this._categoryId),
       switchMap(categoryId => this._is.getSubCategoryByCategory(categoryId)),
@@ -56,9 +56,11 @@ export class IngredientListComponent {
       })
     )
 
+
+
     this.ingredient$ = this.categoryForm.valueChanges.pipe(
-      startWith(this.categoryForm.value),
-      switchMap(value => this._is.getIngredientById(value.categoryId, value.subcategoryId))
+      startWith(this.categoryForm),
+      switchMap(value => this._is.getIngredientById(value.categoryId, value.subCategoryId)),
     );
   }
 
