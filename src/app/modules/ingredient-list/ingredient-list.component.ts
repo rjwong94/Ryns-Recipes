@@ -18,8 +18,8 @@ export class IngredientListComponent {
   category$: Observable<Category[]>;
   subcategory$!: Observable<SubCategory[] | undefined>;
   ingredient$!: Observable<Ingredient[] | undefined>;
-  // currentCategoryId: number;
-  // currentSubCategoryId!: number;
+  currentCategoryId: number;
+  currentSubCategoryId!: number;
 
   public categoryForm: FormGroup = new FormGroup({
     categoryId: new FormControl(0),
@@ -40,7 +40,6 @@ export class IngredientListComponent {
 
   constructor(private _is: IngredientsService) {
     this.category$ = this._is.categories$;
-
     this.subcategory$ = this._categoryIdForm.valueChanges.pipe(
       startWith(this._categoryId),
       switchMap(categoryId => this._is.getSubCategoryByCategory(categoryId)),
@@ -56,11 +55,9 @@ export class IngredientListComponent {
       })
     )
 
-
-
     this.ingredient$ = this.categoryForm.valueChanges.pipe(
       startWith(this.categoryForm),
-      switchMap(value => this._is.getIngredientById(value.categoryId, value.subCategoryId)),
+      switchMap(value => this._is.getIngredientById(value.categoryId, value.subCategoryId!)),
     );
   }
 

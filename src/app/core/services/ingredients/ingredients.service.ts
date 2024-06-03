@@ -25,7 +25,7 @@ export class IngredientsService {
                 map(ingredients => ingredients.filter(
                     value => value.categoryID === categoryId && value.subcategoryID === subcategoryId
                 ))
-            )
+            );
         }
         
         else{
