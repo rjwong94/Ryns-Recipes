@@ -16,7 +16,7 @@
     <div class="subcategory-dropdown">
       <label for="subcategory">Sub Category: </label>
       <select formControlName="subCategoryId" name="subCategorySelect">
-        <option>
+        <option [ngValue]="-1">
           None
         </option>       
         <option *ngFor="let subcategory of (subcategory$ | async)" [ngValue]="subcategory.id">

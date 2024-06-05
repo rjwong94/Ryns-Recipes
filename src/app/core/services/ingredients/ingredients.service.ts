@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { CATEGORIES, INGREDIENTS, SUBCATEGORIES } from "./ingredients.data";
 import { Category, Ingredient, SubCategory } from "./ingredients.interface";
 import { BehaviorSubject, Observable, map, of } from "rxjs";
+import { FormControl } from "@angular/forms";
 
 @Injectable({ providedIn: 'root' })
 export class IngredientsService {
@@ -19,22 +20,38 @@ export class IngredientsService {
         return this.ingredients.filter(ingredient => ingredient.id === id).at(0);
     }
 
-    public getIngredientById(categoryId: number, subcategoryId?: number): Observable<Ingredient[]> {
-        if (subcategoryId){
+    public getIngredientById(categoryId: number, subcategoryId: number): Observable<Ingredient[]> {
+        if (subcategoryId < 0) {
+            return this.ingredients$.pipe(
+                map(ingredients => ingredients.filter(
+                    value => value.categoryID === categoryId
+                ))
+            )
+        }
+
+        else {
             return this.ingredients$.pipe(
                 map(ingredients => ingredients.filter(
                     value => value.categoryID === categoryId && value.subcategoryID === subcategoryId
                 ))
             );
         }
-        
-        else{
-            return this.ingredients$.pipe(
-                map(ingredients => ingredients.filter(
-                    value => value.categoryID === categoryId
-                ))
-            );
-        }
+
+        // if (subcategoryId){
+        //     return this.ingredients$.pipe(
+        //         map(ingredients => ingredients.filter(
+        //             value => value.categoryID === categoryId && value.subcategoryID === subcategoryId
+        //         ))
+        //     );
+        // }
+
+        // else{
+        //     return this.ingredients$.pipe(
+        //         map(ingredients => ingredients.filter(
+        //             value => value.categoryID === categoryId
+        //         ))
+        //     );
+        // }
     }
 
     public getCategory(id: number): Observable<Category | undefined> {

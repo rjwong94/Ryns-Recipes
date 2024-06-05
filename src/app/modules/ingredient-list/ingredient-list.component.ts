@@ -19,6 +19,7 @@ export class IngredientListComponent {
   subcategory$!: Observable<SubCategory[] | undefined>;
   ingredient$!: Observable<Ingredient[] | undefined>;
 
+
   public categoryForm: FormGroup = new FormGroup({
     categoryId: new FormControl(0),
     subCategoryId: new FormControl(0),
@@ -47,7 +48,7 @@ export class IngredientListComponent {
           this._subCategoryIdForm.disable();
         }
         else {
-          this._subCategoryIdForm.patchValue(0);
+          this._subCategoryIdForm.patchValue(-1);
           this._subCategoryIdForm.enable();
         }
       })
