@@ -18,7 +18,7 @@ export class SubmitIngredientComponent {
 
   public ingredientForm: FormGroup = new FormGroup({
     categoryId: new FormControl(0),
-    subCategoryId: new FormControl(0),
+    subCategoryId: new FormControl(0, [Validators.required]),
     name: new FormControl('', [Validators.required]),
   })
 
@@ -36,6 +36,7 @@ export class SubmitIngredientComponent {
 
   constructor(private _is: IngredientsService) {
     this.categories$ = this._is.categories$;
+
     this.subcategory$ = this._categoryIdForm.valueChanges.pipe(
       startWith(this._categoryId),
       switchMap(categoryId => this._is.getSubCategoryByCategory(categoryId)),
@@ -45,7 +46,7 @@ export class SubmitIngredientComponent {
           this._subCategoryIdForm.disable();
         }
         else {
-          this._subCategoryIdForm.patchValue(-1);
+          this._subCategoryIdForm.patchValue(0);
           this._subCategoryIdForm.enable();
         }
       })
