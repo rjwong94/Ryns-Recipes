@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Category, SubCategory, Ingredient } from '../../core/services/ingredients/ingredients.interface';
-import { CommonModule } from '@angular/common';
+import { AsyncPipe, CommonModule } from '@angular/common';
 import { IngredientsService } from '../../core/services/ingredients/ingredients.service';
 import { Observable, startWith, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-submit-ingredient',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, AsyncPipe],
   templateUrl: './submit-ingredient.component.html',
   styleUrl: './submit-ingredient.component.scss'
 })
 export class SubmitIngredientComponent {
-  public categories$: Observable<Category[]>;
-  // public subCategories$: Observable<SubCategory[]>;
+  categories$: Observable<Category[]>;
+  subcategory$!: Observable<SubCategory[] | undefined>;
 
   public ingredientForm: FormGroup = new FormGroup({
     categoryId: new FormControl(0),
@@ -23,7 +23,7 @@ export class SubmitIngredientComponent {
   })
 
   private get _categoryIdForm(): FormControl<number> {
-    return this.ingredientForm.get('categoryID') as FormControl<number>;
+    return this.ingredientForm.get('categoryId') as FormControl<number>;
   }
 
   private get _categoryId(): number {
@@ -36,19 +36,20 @@ export class SubmitIngredientComponent {
 
   constructor(private _is: IngredientsService) {
     this.categories$ = this._is.categories$;
-    // this.subCategories$ = this._categoryIdForm.valueChanges.pipe(
-    //   startWith(this._categoryId),
-    //   switchMap(categoryId => this._is.getSubCategoryByCategory(categoryId)),
-    //   tap(subCategories => {
-    //     if(subCategories.length === 0) {
-    //       this._subCategoryIdForm.patchValue(undefined);
-    //       this._subCategoryIdForm.disable();
-    //     } else {
-    //       this._subCategoryIdForm.patchValue(0);
-    //       this._subCategoryIdForm.enable();
-    //     }
-    //   }),
-    // )
+    this.subcategory$ = this._categoryIdForm.valueChanges.pipe(
+      startWith(this._categoryId),
+      switchMap(categoryId => this._is.getSubCategoryByCategory(categoryId)),
+      tap(subCategories => {
+        if (subCategories.length === 0) {
+          this._subCategoryIdForm.patchValue(undefined);
+          this._subCategoryIdForm.disable();
+        }
+        else {
+          this._subCategoryIdForm.patchValue(-1);
+          this._subCategoryIdForm.enable();
+        }
+      })
+    )
   };
 }
 
