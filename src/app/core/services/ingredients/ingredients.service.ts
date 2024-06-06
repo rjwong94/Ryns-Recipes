@@ -20,6 +20,12 @@ export class IngredientsService {
         return this.ingredients.filter(ingredient => ingredient.id === id).at(0);
     }
 
+    public getIngredient2 (id: number): Observable<Ingredient | undefined> {
+        return this.ingredients$.pipe(
+            map(ingredients => ingredients.filter(value => value.id === id).at(0))
+        )
+    }
+
     public getIngredientById(categoryId: number, subcategoryId: number): Observable<Ingredient[]> {
         if (subcategoryId < 0) {
             return this.ingredients$.pipe(
@@ -36,22 +42,6 @@ export class IngredientsService {
                 ))
             );
         }
-
-        // if (subcategoryId){
-        //     return this.ingredients$.pipe(
-        //         map(ingredients => ingredients.filter(
-        //             value => value.categoryID === categoryId && value.subcategoryID === subcategoryId
-        //         ))
-        //     );
-        // }
-
-        // else{
-        //     return this.ingredients$.pipe(
-        //         map(ingredients => ingredients.filter(
-        //             value => value.categoryID === categoryId
-        //         ))
-        //     );
-        // }
     }
 
     public getCategory(id: number): Observable<Category | undefined> {

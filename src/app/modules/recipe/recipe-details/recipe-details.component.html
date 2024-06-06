@@ -1,9 +1,9 @@
-<div *ngIf="recipe">{{recipe.id}}
+<div *ngIf="recipes$ | async as recipe">
   <!-- The below ingredient-list will eventually have its own component and app outlet in place -->
   <div class="ingredient-list">
     <h3>Ingredients</h3>
-    <ng-container *ngFor="let ingredientId of recipe.ingredients; index as i;">
-      <ng-container *ngIf="getIngredient(ingredientId) as ingredient">
+    <ng-container *ngFor="let ingredients of recipe.ingredients; index as i;">
+      <ng-container *ngIf="(getIngredient(ingredients) | async) as ingredient">
         <ul>{{recipe.amount[i]}} {{recipe.unit[i]}} {{ ingredient.name }}</ul>
       </ng-container>
     </ng-container>
