@@ -1,4 +1,4 @@
-<form [formGroup]="ingredientForm">
+<form [formGroup]="ingredientForm" (ngSubmit)="onSubmit()">
   <fieldset>
     <legend>Submit Ingredients</legend>
 
@@ -20,7 +20,7 @@
       </select>
     </div>
 
-    <div class="mb-3">
+    <div class="ingredient-name-text">
       <label for="ingredientName" class="form-label">Ingredient Name</label>
       <input 
         type="text"
@@ -31,6 +31,10 @@
         placeholder="Add ingredient name here..."
         [class.is-invalid]="ingredientForm.get('name')?.invalid && ingredientForm.get('name')?.touched"
       >
+    </div>
+
+    <div class="submite-button">
+      <button type="submit" name="formSubmitButton" [disabled]="!ingredientForm.valid">Submit</button>
     </div>
 
   </fieldset>

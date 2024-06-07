@@ -52,6 +52,11 @@ export class SubmitIngredientComponent {
       })
     )
   };
+
+  onSubmit() {
+    // TODO: Use EventEmitter with form value
+    console.warn(this.ingredientForm.value);
+  }
 }
 
 
