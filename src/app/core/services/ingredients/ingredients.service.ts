@@ -41,9 +41,11 @@ export class IngredientsService {
     }
 
     public getNextIngredientId(): number {
-        const currentIngredients = this._ingredients$.value
+        return Math.max(...this._ingredients$.value.map(ingredient => ingredient.id)) + 1;
+    }
 
-        return Math.max(...currentIngredients.map(ingredient => ingredient.id)) + 1;
+    public addIngredient(ingredient: Ingredient): void {
+        this._ingredients$.next([...this._ingredients$.value, ingredient]);
     }
 
     public getCategory(id: number): Observable<Category | undefined> {

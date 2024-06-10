@@ -65,6 +65,7 @@ export class SubmitIngredientComponent {
       };
 
       console.log('New Ingredient', newIngredient);
+      this._is.addIngredient(newIngredient);
     }
 
     else {console.log('Form is invalid');}
