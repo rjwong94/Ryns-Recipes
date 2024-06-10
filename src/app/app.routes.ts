@@ -3,11 +3,13 @@ import { IngredientListComponent } from './modules/ingredient-list/ingredient-li
 import { RecipeComponent } from './modules/recipe/recipe.component';
 import { SubmitIngredientComponent } from './modules/submit-ingredient/submit-ingredient.component';
 import { PageNotFoundComponent } from './modules/page-not-found/page-not-found.component';
+import { SubmitRecipeComponent } from './modules/submit-recipe/submit-recipe.component';
 
 export const routes: Routes = [
   { path: 'ingredient-list', component: IngredientListComponent },
   { path: 'recipe-list', component: RecipeComponent },
   { path: 'submit-ingredients', component: SubmitIngredientComponent },
   { path: 'page-not-found', component: PageNotFoundComponent },
+  { path: 'submit-recipe', component: SubmitRecipeComponent },
   { path: '**', component: PageNotFoundComponent },
 ];

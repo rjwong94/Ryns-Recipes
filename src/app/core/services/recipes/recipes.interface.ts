@@ -1,5 +1,3 @@
-import { Ingredient } from "../ingredients/ingredients.interface";
-
 export interface Recipe {
   id: number;
   name: string;
