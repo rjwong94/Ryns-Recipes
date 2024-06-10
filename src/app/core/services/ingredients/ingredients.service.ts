@@ -16,11 +16,7 @@ export class IngredientsService {
 
     constructor() { }
 
-    public getIngredient(id: number): Ingredient | undefined {
-        return this.ingredients.filter(ingredient => ingredient.id === id).at(0);
-    }
-
-    public getIngredient2 (id: number): Observable<Ingredient | undefined> {
+    public getIngredient (id: number): Observable<Ingredient | undefined> {
         return this.ingredients$.pipe(
             map(ingredients => ingredients.filter(value => value.id === id).at(0))
         )
@@ -42,6 +38,12 @@ export class IngredientsService {
                 ))
             );
         }
+    }
+
+    public getNextIngredientId(): number {
+        const currentIngredients = this._ingredients$.value
+
+        return Math.max(...currentIngredients.map(ingredient => ingredient.id)) + 1;
     }
 
     public getCategory(id: number): Observable<Category | undefined> {

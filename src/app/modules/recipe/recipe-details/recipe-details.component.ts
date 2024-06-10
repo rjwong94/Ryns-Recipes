@@ -28,7 +28,7 @@ export class RecipeDetailsComponent implements OnChanges {
   }
 
   public getIngredient(id: number): Observable<Ingredient | undefined> {
-    return this._is.getIngredient2(id);
+    return this._is.getIngredient(id);
   }
 
 }

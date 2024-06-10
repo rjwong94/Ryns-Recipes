@@ -54,8 +54,23 @@ export class SubmitIngredientComponent {
   };
 
   onSubmit() {
+    if (this.ingredientForm.valid) {
+      const formValues = this.ingredientForm.value;
+
+      const newIngredient: Ingredient = {
+        categoryID: formValues.categoryId,
+        subcategoryID: formValues.subCategoryId,
+        name: formValues.name,
+        id: this._is.getNextIngredientId(),
+      };
+
+      console.log('New Ingredient', newIngredient);
+    }
+
+    else {console.log('Form is invalid');}
+    
     // TODO: Use EventEmitter with form value
-    console.warn(this.ingredientForm.value);
+    // console.warn(this.ingredientForm.value);
   }
 }
 
