@@ -31,5 +31,21 @@
         </option>
       </select>
     </div>
+
+    <div class="ingredients-dropdown">
+      <label for="ingredients">Ingredients: </label>
+
+      <select name="ingredientsSelect">
+        <option 
+        value="" 
+        disabled 
+        selected>Select an ingredient
+      </option>
+
+        <option *ngFor="let ingredient of (ingredients$ | async)" [ngValue]="ingredient.id">
+          {{ingredient.name}}
+        </option>
+      </select>
+    </div>
   </fieldset>
 </form>

@@ -7,6 +7,12 @@
     <div class="category-dropdown">
       <label for="category">Category: </label>
       <select formControlName="categoryId" name="categorySelect">
+        <option 
+        value="" 
+        disabled 
+        selected>Select the ingredient category
+      </option>
+
         <option *ngFor="let category of (category$ | async)" [ngValue]="category.id">
           {{category.name}}
         </option>
@@ -16,9 +22,12 @@
     <div class="subcategory-dropdown">
       <label for="subcategory">Sub Category: </label>
       <select formControlName="subCategoryId" name="subCategorySelect">
-        <option [ngValue]="-1">
-          None
-        </option>       
+        <option 
+        value="" 
+        disabled 
+        selected>Select the ingredient category
+      </option>
+
         <option *ngFor="let subcategory of (subcategory$ | async)" [ngValue]="subcategory.id">
           {{subcategory.name}}
         </option>

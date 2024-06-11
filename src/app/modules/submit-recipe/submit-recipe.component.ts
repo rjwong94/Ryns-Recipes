@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
 import { IngredientsService } from '../../core/services/ingredients/ingredients.service';
 import { Observable, startWith, switchMap, tap } from 'rxjs';
-import { Category, SubCategory } from '../../core/services/ingredients/ingredients.interface';
+import { Category, Ingredient, SubCategory } from '../../core/services/ingredients/ingredients.interface';
 import { AsyncPipe, CommonModule } from '@angular/common';
 
 
@@ -16,6 +16,7 @@ import { AsyncPipe, CommonModule } from '@angular/common';
 export class SubmitRecipeComponent {
   categories$: Observable<Category[]>;
   subcategory$!: Observable<SubCategory[] | undefined>;
+  ingredients$!: Observable<Ingredient[] | undefined>;
 
   public recipeForm: FormGroup = new FormGroup ({
     recipeName: new FormControl('', [Validators.required]),
@@ -51,6 +52,11 @@ export class SubmitRecipeComponent {
           this._subCategoryIdForm.enable();
         }
       })
+    )
+
+    this.ingredients$ = this.recipeForm.valueChanges.pipe(
+      startWith(this.recipeForm),
+      switchMap(value => this._is.getIngredientById(value.categoryId, value.subCategoryId!))
     )
   };
 }
