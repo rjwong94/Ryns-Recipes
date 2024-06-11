@@ -2,5 +2,34 @@
   <fieldset>
     <legend>Submit Recipes</legend>
 
+    <div class="category-dropdown">
+      <label for="category">Category: </label>
+      <select formControlName="categoryId" name="categorySelect">
+        <option 
+        value="" 
+        disabled 
+        selected>Select the ingredient category
+      </option>
+
+        <option *ngFor="let category of (categories$ | async)" [ngValue]="category.id">
+          {{category.name}}
+        </option>
+      </select>
+    </div>
+
+    <div class="subcategory-dropdown">
+      <label for="subcategory">Sub Category: </label>
+      <select formControlName="subCategoryId" name="subCategorySelect">
+        <option 
+        value="" 
+        disabled 
+        selected>Select the ingredient category
+      </option>
+
+        <option *ngFor="let subcategory of (subcategory$ | async)" [ngValue]="subcategory.id">
+          {{subcategory.name}}
+        </option>
+      </select>
+    </div>
   </fieldset>
 </form>
