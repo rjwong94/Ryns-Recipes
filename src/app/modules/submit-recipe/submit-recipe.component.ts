@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
 import { IngredientsService } from '../../core/services/ingredients/ingredients.service';
-import { Observable, startWith, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, Observable, startWith, switchMap, tap } from 'rxjs';
 import { Category, Ingredient, SubCategory } from '../../core/services/ingredients/ingredients.interface';
 import { AsyncPipe, CommonModule } from '@angular/common';
 
@@ -17,15 +17,17 @@ export class SubmitRecipeComponent {
   categories$: Observable<Category[]>;
   subcategory$!: Observable<SubCategory[] | undefined>;
   ingredients$!: Observable<Ingredient[] | undefined>;
+  recipeIngredients!: Ingredient[] | undefined;
+  _recipeIngredients$: BehaviorSubject<Ingredient[] | undefined> = new BehaviorSubject(this.recipeIngredients);
+  recipeIngredients$: Observable<Ingredient[] | undefined> = this._recipeIngredients$.asObservable();
 
-  public recipeForm: FormGroup = new FormGroup ({
-    recipeName: new FormControl('', [Validators.required]),
+  public ingredientForm: FormGroup = new FormGroup ({
     categoryId: new FormControl(0,[Validators.required]),
     subCategoryId: new FormControl(0,[Validators.required]),
   })
 
   private get _categoryIdForm(): FormControl<number> {
-    return this.recipeForm.get('categoryId') as FormControl<number>;
+    return this.ingredientForm.get('categoryId') as FormControl<number>;
   }
 
   private get _categoryId(): number {
@@ -33,7 +35,7 @@ export class SubmitRecipeComponent {
   }
 
   private get _subCategoryIdForm(): FormControl<number | undefined> {
-    return this.recipeForm.get('subCategoryId') as FormControl<number>;
+    return this.ingredientForm.get('subCategoryId') as FormControl<number>;
   }
 
   constructor(private _is: IngredientsService) {
@@ -54,9 +56,19 @@ export class SubmitRecipeComponent {
       })
     )
 
-    this.ingredients$ = this.recipeForm.valueChanges.pipe(
-      startWith(this.recipeForm),
+    this.ingredients$ = this.ingredientForm.valueChanges.pipe(
+      startWith(this.ingredientForm),
       switchMap(value => this._is.getIngredientById(value.categoryId, value.subCategoryId!))
     )
   };
+
+  onSubmit() {    
+    // TODO: Use EventEmitter with form value
+    if (this.ingredientForm.valid) {
+    //   this.recipeIngredients?.push(this.ingredientForm.value.selectedIngredient);
+    //   console.log(this.ingredientForm.value.selectedIngredient.name);
+    console.warn(this.ingredientForm.value);
+    }
+    else {console.log('Form is invalid');}
+  }
 }

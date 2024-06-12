@@ -1,4 +1,4 @@
-<form [formGroup]="recipeForm">
+<form [formGroup]="ingredientForm" (ngSubmit)="onSubmit()">
   <fieldset>
     <legend>Submit Recipes</legend>
 
@@ -42,10 +42,21 @@
         selected>Select an ingredient
       </option>
 
-        <option *ngFor="let ingredient of (ingredients$ | async)" [ngValue]="ingredient.id">
+        <option *ngFor="let ingredient of (ingredients$ | async)" [ngValue]="ingredient">
           {{ingredient.name}}
         </option>
       </select>
     </div>
+
+    <div class="submit-button">
+      <button type="submit" name="ingredientFormSubmitButton" [disabled]="!ingredientForm.valid">Add ingredient</button>
+    </div>
   </fieldset>
+
+  <div class="ingredients-list">
+    <label for="ingredients">Ingredients: </label>
+    <ng-container *ngFor="let ingredient of (recipeIngredients$ | async)">
+        <ul>{{ingredient.name}}</ul>
+    </ng-container>
+  </div>
 </form>
