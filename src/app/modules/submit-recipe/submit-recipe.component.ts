@@ -65,7 +65,7 @@ export class SubmitRecipeComponent {
   onSubmit() {    
     // TODO: Use EventEmitter with form value
     if (this.ingredientForm.valid) {
-    //   this.recipeIngredients?.push(this.ingredientForm.value.selectedIngredient);
+    // this.recipeIngredients?.push(this.ingredientForm.value.selectedIngredient);
     //   console.log(this.ingredientForm.value.selectedIngredient.name);
     console.warn(this.ingredientForm.value);
     }
