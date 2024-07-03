@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
 import { IngredientsService } from '../../../core/services/ingredients/ingredients.service';
 import { BehaviorSubject, Observable, startWith, switchMap, tap } from 'rxjs';
@@ -62,14 +62,21 @@ export class AddIngredientFormComponent {
     )
   };
 
-  onSubmit() {
-    // TODO: Use EventEmitter with form value
+  @Output() public onSubmit: EventEmitter<Ingredient> = new EventEmitter();
+
+  submit(): void {
+
     if (this.addIngredientForm.valid) {
-      // this.recipeIngredients?.push(this.addIngredientForm.value.selectedIngredient);
-      //   console.log(this.addIngredientForm.value.selectedIngredient.name);
       console.warn(this.addIngredientForm.value);
     }
     else { console.log('Form is invalid'); }
+
+    // const data = this.addIngredientForm.getRawValue() as Ingredient;
+    // this.onSubmit.emit(data);
+    // this.addIngredientForm.patchValue({
+    //   categoryId: 0,
+    //   subCategoryId: 0,
+    // });
   }
 }
 
