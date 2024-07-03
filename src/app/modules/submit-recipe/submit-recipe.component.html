@@ -1,62 +1,8 @@
-<form [formGroup]="ingredientForm" (ngSubmit)="onSubmit()">
-  <fieldset>
-    <legend>Submit Recipes</legend>
+<app-add-ingredient-form></app-add-ingredient-form>
 
-    <div class="category-dropdown">
-      <label for="category">Category: </label>
-      <select formControlName="categoryId" name="categorySelect">
-        <option 
-        value="" 
-        disabled 
-        selected>Select the ingredient category
-      </option>
-
-        <option *ngFor="let category of (categories$ | async)" [ngValue]="category.id">
-          {{category.name}}
-        </option>
-      </select>
-    </div>
-
-    <div class="subcategory-dropdown">
-      <label for="subcategory">Sub Category: </label>
-      <select formControlName="subCategoryId" name="subCategorySelect">
-        <option 
-        value="-1" 
-        disabled 
-        selected>Select the ingredient category
-      </option>
-
-        <option *ngFor="let subcategory of (subcategory$ | async)" [ngValue]="subcategory.id">
-          {{subcategory.name}}
-        </option>
-      </select>
-    </div>
-
-    <div class="ingredients-dropdown">
-      <label for="ingredients">Ingredients: </label>
-
-      <select name="ingredientsSelect">
-        <option 
-        value="" 
-        disabled 
-        selected>Select an ingredient
-      </option>
-
-        <option *ngFor="let ingredient of (ingredients$ | async)" [ngValue]="ingredient">
-          {{ingredient.name}}
-        </option>
-      </select>
-    </div>
-
-    <div class="submit-button">
-      <button type="submit" name="ingredientFormSubmitButton" [disabled]="!ingredientForm.valid">Add ingredient</button>
-    </div>
-  </fieldset>
-
-  <div class="ingredients-list">
-    <label for="ingredients">Ingredients: </label>
-    <ng-container *ngFor="let ingredient of (recipeIngredients$ | async)">
-        <ul>{{ingredient.name}}</ul>
-    </ng-container>
-  </div>
-</form>
+<div class="ingredients-list">
+  <label for="ingredients">Ingredients: </label>
+  <ng-container *ngFor="let ingredient of (recipeIngredients$ | async)">
+    <ul>{{ingredient.name}}</ul>
+  </ng-container>
+</div>
