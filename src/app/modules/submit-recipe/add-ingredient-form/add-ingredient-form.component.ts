@@ -23,7 +23,7 @@ export class AddIngredientFormComponent {
 
   public addIngredientForm: FormGroup = new FormGroup({
     categoryId: new FormControl(0, [Validators.required]),
-    subCategoryId: new FormControl(0, [Validators.required]),
+    subCategoryId: new FormControl(),
   })
 
   private get _categoryIdForm(): FormControl<number> {
@@ -66,17 +66,17 @@ export class AddIngredientFormComponent {
 
   submit(): void {
 
-    if (this.addIngredientForm.valid) {
-      console.warn(this.addIngredientForm.value);
-    }
-    else { console.log('Form is invalid'); }
+    // if (this.addIngredientForm.valid) {
+    //   console.warn(this.addIngredientForm.value);
+    // }
+    // else { console.log('Form is invalid'); }
 
-    // const data = this.addIngredientForm.getRawValue() as Ingredient;
-    // this.onSubmit.emit(data);
-    // this.addIngredientForm.patchValue({
-    //   categoryId: 0,
-    //   subCategoryId: 0,
-    // });
+    const data = this.addIngredientForm.getRawValue() as Ingredient;
+    this.onSubmit.emit(data);
+    this.addIngredientForm.patchValue({
+      categoryId: 0,
+      subCategoryId: 0,
+    });
   }
 }
 
