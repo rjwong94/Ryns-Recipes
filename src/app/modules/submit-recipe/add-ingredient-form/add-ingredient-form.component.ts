@@ -58,7 +58,7 @@ export class AddIngredientFormComponent {
 
     this.ingredients$ = this.addIngredientForm.valueChanges.pipe(
       startWith(this.addIngredientForm),
-      switchMap(value => this._is.getIngredientById(value.categoryId, value.subCategoryId!))
+      switchMap(value => this._is.getIngredientById(value.categoryId, value.subCategoryId))
     )
   };
 

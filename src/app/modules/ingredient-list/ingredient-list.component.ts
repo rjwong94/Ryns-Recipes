@@ -56,7 +56,7 @@ export class IngredientListComponent {
     this.ingredient$ = this.categoryForm.valueChanges.pipe(
       startWith(this.categoryForm),
       tap(value => console.log(value.categoryId, value.subCategoryId)),
-      switchMap(value => this._is.getIngredientById(value.categoryId, value.subCategoryId!)),
+      switchMap(value => this._is.getIngredientById(value.categoryId, value.subCategoryId)),
     );
   }
 

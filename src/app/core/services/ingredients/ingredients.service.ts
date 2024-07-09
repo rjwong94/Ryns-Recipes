@@ -16,28 +16,29 @@ export class IngredientsService {
 
     constructor() { }
 
-    public getIngredient (id: number): Observable<Ingredient | undefined> {
+    public getIngredient(id: number): Observable<Ingredient | undefined> {
         return this.ingredients$.pipe(
             map(ingredients => ingredients.filter(value => value.id === id).at(0))
         )
     }
 
-    
-    public getIngredientById(categoryId: number, subcategoryId?: number): Observable<Ingredient[]> {
-        if (subcategoryId === undefined) {
-            return this.ingredients$.pipe(
-                map(ingredients => ingredients.filter(
-                    value => value.categoryID === categoryId
-                ))
-            )
-        }
 
-        else {
+    public getIngredientById(categoryId: number, subcategoryId?: number): Observable<Ingredient[]> {
+        if (subcategoryId) {
             return this.ingredients$.pipe(
                 map(ingredients => ingredients.filter(
                     value => value.categoryID === categoryId && value.subcategoryID === subcategoryId
                 ))
             );
+
+        }
+
+        else {
+            return this.ingredients$.pipe(
+                map(ingredients => ingredients.filter(
+                    value => value.categoryID === categoryId
+                ))
+            )
         }
     }
 
