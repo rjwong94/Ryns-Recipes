@@ -47,7 +47,7 @@ export class IngredientListComponent {
           this._subCategoryIdForm.disable();
         }
         else {
-          this._subCategoryIdForm.patchValue(-1);
+          this._subCategoryIdForm.patchValue(0);
           this._subCategoryIdForm.enable();
         }
       })

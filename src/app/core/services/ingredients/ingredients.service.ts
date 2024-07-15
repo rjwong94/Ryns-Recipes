@@ -2,7 +2,6 @@ import { Injectable } from "@angular/core";
 import { CATEGORIES, INGREDIENTS, SUBCATEGORIES } from "./ingredients.data";
 import { Category, Ingredient, SubCategory } from "./ingredients.interface";
 import { BehaviorSubject, Observable, map, of } from "rxjs";
-import { FormControl } from "@angular/forms";
 
 @Injectable({ providedIn: 'root' })
 export class IngredientsService {
