@@ -17,9 +17,7 @@ export class AddIngredientFormComponent {
   categories$: Observable<Category[]>;
   subcategory$!: Observable<SubCategory[] | undefined>;
   ingredients$!: Observable<Ingredient[] | undefined>;
-  recipeIngredients!: Ingredient[] | undefined;
-  _recipeIngredients$: BehaviorSubject<Ingredient[] | undefined> = new BehaviorSubject(this.recipeIngredients);
-  recipeIngredients$: Observable<Ingredient[] | undefined> = this._recipeIngredients$.asObservable();
+  recipeIngredient!: Ingredient | undefined;
 
   public addIngredientForm: FormGroup = new FormGroup({
     categoryId: new FormControl(0, [Validators.required]),
@@ -58,25 +56,22 @@ export class AddIngredientFormComponent {
 
     this.ingredients$ = this.addIngredientForm.valueChanges.pipe(
       startWith(this.addIngredientForm),
-      switchMap(value => this._is.getIngredientById(value.categoryId, value.subCategoryId))
+      switchMap(value => this._is.getIngredientById(value.categoryId, value.subCategoryId)),
     )
   };
 
   @Output() public onSubmit: EventEmitter<Ingredient> = new EventEmitter();
 
   submit(): void {
+    this.ingredients$.subscribe(ingredient => {
+      if (ingredient && ingredient.length > 0) {
+        this.addIngredientForm.get('ingredient')?.setValue(ingredient[0]);
+        this.recipeIngredient = ingredient[0];
+        console.log(this.recipeIngredient.name);
+      }
+    })
 
-    // if (this.addIngredientForm.valid) {
-    //   console.warn(this.addIngredientForm.value);
-    // }
-    // else { console.log('Form is invalid'); }
-
-    const data = this.addIngredientForm.getRawValue() as Ingredient;
-    this.onSubmit.emit(data);
-    this.addIngredientForm.patchValue({
-      categoryId: 0,
-      subCategoryId: 0,
-    });
+    this.onSubmit.emit(this.recipeIngredient);
   }
 }
 
