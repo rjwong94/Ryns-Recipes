@@ -36,25 +36,9 @@ export class AddIngredientFormComponent implements OnInit {
     this.categories$ = this._is.categories$;
 
     this.subcategory$ = this.addIngredientForm.get('categoryId')!.valueChanges.pipe(
-      startWith(this._categoryIdForm),
+      startWith(this._categoryIdForm.value),
       switchMap(categoryId => this._is.getSubCategoryByCategory(categoryId)),
-      tap(subCategories => {
-        if (subCategories.length === 0) {
-          this._subCategoryIdForm.patchValue(undefined);
-          this._subCategoryIdForm.disable();
-        }
-        else {
-          this._subCategoryIdForm.patchValue(0);
-          this._subCategoryIdForm.enable();
-        }
-      })
     )
-
-    // this.ingredients$ = this.addIngredientForm.valueChanges.pipe(
-    //   startWith(this.addIngredientForm),
-    //   tap(value => {console.log(value.categoryId)}),
-    //   switchMap(value => this._is.getIngredientById(value.categoryId, value.subCategoryId))
-    // )
 
     this.ingredients$ = combineLatest([
       this._categoryIdForm.valueChanges.pipe(startWith(this._categoryIdForm.value)),
@@ -79,7 +63,13 @@ export class AddIngredientFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    if (this.categories$) {
+      this.categories$.subscribe(categories => {
+        console.log('Categories:', categories);
+      });
+    } else {
+      console.error('categories$ is undefined');
+    }
   }
 }
 
