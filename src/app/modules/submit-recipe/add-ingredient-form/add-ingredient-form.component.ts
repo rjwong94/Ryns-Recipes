@@ -38,38 +38,42 @@ export class AddIngredientFormComponent implements OnInit {
     this.subcategory$ = this.addIngredientForm.get('categoryId')!.valueChanges.pipe(
       startWith(this._categoryIdForm.value),
       switchMap(categoryId => this._is.getSubCategoryByCategory(categoryId)),
+      tap(subCategories => {
+        if (subCategories.length === 0) {
+          this._subCategoryIdForm.patchValue(undefined);
+          this._subCategoryIdForm.disable();
+        }
+        else {
+          this._subCategoryIdForm.patchValue(0);
+          this._subCategoryIdForm.enable();
+        }
+      })
     )
 
     this.ingredients$ = combineLatest([
       this._categoryIdForm.valueChanges.pipe(startWith(this._categoryIdForm.value)),
       this._subCategoryIdForm.valueChanges.pipe(startWith(this._subCategoryIdForm.value))
     ]).pipe(
-      switchMap(([categoryId, subCategoryId]) => this._is.getIngredientById(categoryId, subCategoryId))
+      switchMap(([categoryId, subCategoryId]) => this._is.getIngredientById(categoryId, subCategoryId)),
+      tap(ingredient => {
+        if (ingredient && ingredient.length > 0) {
+          this.addIngredientForm.get('ingredient')?.setValue(ingredient[0]);
+          this.recipeIngredient = ingredient[0];
+          console.log(this.recipeIngredient.name);
+        }
+        else (console.log("ingredient undefined"))
+      })
     )
   };
 
   @Output() public onSubmit: EventEmitter<Ingredient> = new EventEmitter();
 
   submit(): void {
-    this.ingredients$.subscribe(ingredient => {
-      if (ingredient && ingredient.length > 0) {
-        this.addIngredientForm.get('ingredient')?.setValue(ingredient[0]);
-        this.recipeIngredient = ingredient[0];
-        console.log(this.recipeIngredient.name);
-      }
-    })
-
     this.onSubmit.emit(this.recipeIngredient);
   }
 
   ngOnInit(): void {
-    if (this.categories$) {
-      this.categories$.subscribe(categories => {
-        console.log('Categories:', categories);
-      });
-    } else {
-      console.error('categories$ is undefined');
-    }
+
   }
 }
 
