@@ -35,7 +35,7 @@
 
     <div class="ingredients-list">
       <label for="ingredients">Ingredients: </label>
-      <ng-container *ngFor="let ingredient of (ingredient$ | async)">
+      <ng-container *ngFor="let ingredient of (ingredients$ | async)">
           <ul>{{ingredient.name}}</ul>
       </ng-container>
     </div>

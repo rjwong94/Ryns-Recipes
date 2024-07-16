@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
 import { IngredientsService } from '../../../core/services/ingredients/ingredients.service';
-import { BehaviorSubject, Observable, startWith, switchMap, tap } from 'rxjs';
+import { combineLatest, Observable, startWith, switchMap, tap } from 'rxjs';
 import { Category, Ingredient, SubCategory } from '../../../core/services/ingredients/ingredients.interface';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { IngredientFormComponent } from '../../submit-ingredient/ingredient-form/ingredient-form.component';
@@ -13,7 +13,7 @@ import { IngredientFormComponent } from '../../submit-ingredient/ingredient-form
   templateUrl: './add-ingredient-form.component.html',
   styleUrl: './add-ingredient-form.component.scss'
 })
-export class AddIngredientFormComponent {
+export class AddIngredientFormComponent implements OnInit {
   categories$: Observable<Category[]>;
   subcategory$!: Observable<SubCategory[] | undefined>;
   ingredients$!: Observable<Ingredient[] | undefined>;
@@ -21,15 +21,11 @@ export class AddIngredientFormComponent {
 
   public addIngredientForm: FormGroup = new FormGroup({
     categoryId: new FormControl(0, [Validators.required]),
-    subCategoryId: new FormControl(),
+    subCategoryId: new FormControl(0, [Validators.required]),
   })
 
   private get _categoryIdForm(): FormControl<number> {
     return this.addIngredientForm.get('categoryId') as FormControl<number>;
-  }
-
-  private get _categoryId(): number {
-    return this._categoryIdForm?.value;
   }
 
   private get _subCategoryIdForm(): FormControl<number | undefined> {
@@ -39,8 +35,8 @@ export class AddIngredientFormComponent {
   constructor(private _is: IngredientsService) {
     this.categories$ = this._is.categories$;
 
-    this.subcategory$ = this._categoryIdForm.valueChanges.pipe(
-      startWith(this._categoryId),
+    this.subcategory$ = this.addIngredientForm.get('categoryId')!.valueChanges.pipe(
+      startWith(this._categoryIdForm),
       switchMap(categoryId => this._is.getSubCategoryByCategory(categoryId)),
       tap(subCategories => {
         if (subCategories.length === 0) {
@@ -54,9 +50,17 @@ export class AddIngredientFormComponent {
       })
     )
 
-    this.ingredients$ = this.addIngredientForm.valueChanges.pipe(
-      startWith(this.addIngredientForm),
-      switchMap(value => this._is.getIngredientById(value.categoryId, value.subCategoryId)),
+    // this.ingredients$ = this.addIngredientForm.valueChanges.pipe(
+    //   startWith(this.addIngredientForm),
+    //   tap(value => {console.log(value.categoryId)}),
+    //   switchMap(value => this._is.getIngredientById(value.categoryId, value.subCategoryId))
+    // )
+
+    this.ingredients$ = combineLatest([
+      this._categoryIdForm.valueChanges.pipe(startWith(this._categoryIdForm.value)),
+      this._subCategoryIdForm.valueChanges.pipe(startWith(this._subCategoryIdForm.value))
+    ]).pipe(
+      switchMap(([categoryId, subCategoryId]) => this._is.getIngredientById(categoryId, subCategoryId))
     )
   };
 
@@ -72,6 +76,10 @@ export class AddIngredientFormComponent {
     })
 
     this.onSubmit.emit(this.recipeIngredient);
+  }
+
+  ngOnInit(): void {
+
   }
 }
 

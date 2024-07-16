@@ -3,7 +3,7 @@ import { CommonModule, AsyncPipe } from '@angular/common';
 import { Category, SubCategory, Ingredient } from '../../core/services/ingredients/ingredients.interface';
 import { IngredientsService } from '../../core/services/ingredients/ingredients.service';
 import { IngredientDetailsComponent } from './ingredient-details/ingredient-details.component';
-import { Observable, startWith, switchMap, tap } from 'rxjs';
+import { Observable, startWith, switchMap, tap, combineLatest } from 'rxjs';
 import { FormControl, FormGroup, ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @Component({
@@ -17,7 +17,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, FormsModule } from '@angul
 export class IngredientListComponent {
   category$: Observable<Category[]>;
   subcategory$!: Observable<SubCategory[] | undefined>;
-  ingredient$!: Observable<Ingredient[] | undefined>;
+  ingredients$!: Observable<Ingredient[] | undefined>;
 
   public categoryForm: FormGroup = new FormGroup({
     categoryId: new FormControl(0),
@@ -42,6 +42,7 @@ export class IngredientListComponent {
       startWith(this._categoryId),
       switchMap(categoryId => this._is.getSubCategoryByCategory(categoryId)),
       tap(subCategories => {
+        console.log(subCategories, "end");
         if (subCategories.length === 0) {
           this._subCategoryIdForm.patchValue(undefined);
           this._subCategoryIdForm.disable();
@@ -53,11 +54,12 @@ export class IngredientListComponent {
       })
     )
 
-    this.ingredient$ = this.categoryForm.valueChanges.pipe(
-      startWith(this.categoryForm),
-      tap(value => console.log(value.categoryId, value.subCategoryId)),
-      switchMap(value => this._is.getIngredientById(value.categoryId, value.subCategoryId)),
-    );
+    this.ingredients$ = combineLatest([
+      this._categoryIdForm.valueChanges.pipe(startWith(this._categoryIdForm.value)),
+      this._subCategoryIdForm.valueChanges.pipe(startWith(this._subCategoryIdForm.value))
+    ]).pipe(
+      switchMap(([categoryId, subCategoryId]) => this._is.getIngredientById(categoryId, subCategoryId))
+    )
   }
 
 
