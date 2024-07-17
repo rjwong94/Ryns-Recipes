@@ -17,7 +17,6 @@ export class AddIngredientFormComponent implements OnInit {
   categories$: Observable<Category[]>;
   subcategory$!: Observable<SubCategory[] | undefined>;
   ingredients$!: Observable<Ingredient[] | undefined>;
-  recipeIngredient!: Ingredient | undefined;
 
   public addIngredientForm: FormGroup = new FormGroup({
     categoryId: new FormControl(0, [Validators.required]),
@@ -57,9 +56,7 @@ export class AddIngredientFormComponent implements OnInit {
       switchMap(([categoryId, subCategoryId]) => this._is.getIngredientById(categoryId, subCategoryId)),
       tap(ingredient => {
         if (ingredient && ingredient.length > 0) {
-          this.addIngredientForm.get('ingredient')?.setValue(ingredient[0]);
-          this.recipeIngredient = ingredient[0];
-          console.log(this.recipeIngredient.name);
+          console.log(ingredient);
         }
         else (console.log("ingredient undefined"))
       })
@@ -69,7 +66,6 @@ export class AddIngredientFormComponent implements OnInit {
   @Output() public onSubmit: EventEmitter<Ingredient> = new EventEmitter();
 
   submit(): void {
-    this.onSubmit.emit(this.recipeIngredient);
   }
 
   ngOnInit(): void {
