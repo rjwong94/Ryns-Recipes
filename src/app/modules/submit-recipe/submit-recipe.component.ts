@@ -20,8 +20,8 @@ export class SubmitRecipeComponent {
   public addIngredient(newIngredient: Ingredient): void {
     if (newIngredient){
       this.recipeIngredients?.push(newIngredient);
-      console.log(newIngredient);
-      console.log(this.recipeIngredients)
+      console.log("newly added ingredient: ", newIngredient);
+      console.log("all ingredients: ", this.recipeIngredients)
     }
 
     else (console.log("Undefined Ingredient"))

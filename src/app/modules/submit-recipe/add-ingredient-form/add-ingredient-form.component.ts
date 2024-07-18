@@ -17,7 +17,7 @@ export class AddIngredientFormComponent {
   categories$: Observable<Category[]>;
   subcategory$!: Observable<SubCategory[] | undefined>;
   ingredients$!: Observable<Ingredient[] | undefined>;
-  // selectedIngredient: (Ingredient | undefined);
+  selectedIngredient: (Ingredient | undefined);
 
   public addIngredientForm: FormGroup = new FormGroup({
     categoryId: new FormControl(0, [Validators.required]),
@@ -60,9 +60,7 @@ export class AddIngredientFormComponent {
           console.log(ingredient);
         }
         else (console.log("ingredient undefined"))
-      }),
-      shareReplay(1)
-    )
+      })    )
   };
 
   @Output() public onSubmit: EventEmitter<Ingredient> = new EventEmitter();
