@@ -1,4 +1,5 @@
-<form [formGroup]="addIngredientForm" (ngSubmit)="submit()">
+<!-- <form [formGroup]="addIngredientForm" (ngSubmit)="submit()"> -->
+<form [formGroup]="addIngredientForm">
   <div class="category-dropdown">
     <label for="category">Category: </label>
     <select formControlName="categoryId" name="categorySelect">
@@ -26,7 +27,7 @@
   <div class="ingredients-dropdown">
     <label for="ingredients">Ingredients: </label>
 
-    <select name="ingredientsSelect"> 
+    <select name="ingredientSelect" #ingredientSelect>
       <option disabled selected>Select an ingredient
       </option>
 
@@ -37,7 +38,8 @@
   </div>
 
   <div class="submit-button">
-    <button type="submit" name="ingredientFormSubmitButton" [disabled]="addIngredientForm.invalid">Add
+    <button type="submit" name="ingredientFormSubmitButton" (click)="submit(ingredientSelect.value)"
+      [disabled]="addIngredientForm.invalid">Add
       ingredient</button>
   </div>
 </form>

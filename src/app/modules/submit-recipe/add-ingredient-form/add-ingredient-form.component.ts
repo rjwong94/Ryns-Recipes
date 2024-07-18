@@ -13,7 +13,7 @@ import { IngredientFormComponent } from '../../submit-ingredient/ingredient-form
   templateUrl: './add-ingredient-form.component.html',
   styleUrl: './add-ingredient-form.component.scss'
 })
-export class AddIngredientFormComponent{
+export class AddIngredientFormComponent {
   categories$: Observable<Category[]>;
   subcategory$!: Observable<SubCategory[] | undefined>;
   ingredients$!: Observable<Ingredient[] | undefined>;
@@ -67,9 +67,11 @@ export class AddIngredientFormComponent{
 
   @Output() public onSubmit: EventEmitter<Ingredient> = new EventEmitter();
 
-  submit(): void {
-    // this.onSubmit.emit(this.selectedIngredient);
+  submit(ing: Ingredient | String): void {
+    if (typeof ing === 'string') {
+      console.log(ing);
+    } else {
+      this.onSubmit.emit(ing as Ingredient)
+    }
   }
-
 }
-
