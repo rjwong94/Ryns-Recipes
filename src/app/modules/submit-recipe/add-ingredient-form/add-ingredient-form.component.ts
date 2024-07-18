@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Output, OnInit } from '@angular/core';
-import { ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { ReactiveFormsModule, FormControl, FormGroup, Validators, FormsModule } from '@angular/forms';
 import { IngredientsService } from '../../../core/services/ingredients/ingredients.service';
-import { combineLatest, Observable, startWith, switchMap, tap } from 'rxjs';
+import { combineLatest, Observable, shareReplay, startWith, switchMap, tap } from 'rxjs';
 import { Category, Ingredient, SubCategory } from '../../../core/services/ingredients/ingredients.interface';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { IngredientFormComponent } from '../../submit-ingredient/ingredient-form/ingredient-form.component';
@@ -9,14 +9,15 @@ import { IngredientFormComponent } from '../../submit-ingredient/ingredient-form
 @Component({
   selector: 'app-add-ingredient-form',
   standalone: true,
-  imports: [ReactiveFormsModule, AsyncPipe, CommonModule, IngredientFormComponent],
+  imports: [ReactiveFormsModule, AsyncPipe, CommonModule, IngredientFormComponent, FormsModule],
   templateUrl: './add-ingredient-form.component.html',
   styleUrl: './add-ingredient-form.component.scss'
 })
-export class AddIngredientFormComponent implements OnInit {
+export class AddIngredientFormComponent{
   categories$: Observable<Category[]>;
   subcategory$!: Observable<SubCategory[] | undefined>;
   ingredients$!: Observable<Ingredient[] | undefined>;
+  // selectedIngredient: (Ingredient | undefined);
 
   public addIngredientForm: FormGroup = new FormGroup({
     categoryId: new FormControl(0, [Validators.required]),
@@ -59,17 +60,16 @@ export class AddIngredientFormComponent implements OnInit {
           console.log(ingredient);
         }
         else (console.log("ingredient undefined"))
-      })
+      }),
+      shareReplay(1)
     )
   };
 
   @Output() public onSubmit: EventEmitter<Ingredient> = new EventEmitter();
 
   submit(): void {
+    // this.onSubmit.emit(this.selectedIngredient);
   }
 
-  ngOnInit(): void {
-
-  }
 }
 
