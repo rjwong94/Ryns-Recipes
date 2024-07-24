@@ -17,9 +17,9 @@ export class SubmitRecipeComponent {
   _recipeIngredients$: BehaviorSubject<Ingredient[] | undefined> = new BehaviorSubject(this.recipeIngredients);
   recipeIngredients$: Observable<Ingredient[] | undefined> = this._recipeIngredients$.asObservable();
 
-  public addIngredient(newIngredient: Ingredient): void {
+  public addIngredient(newIngredient: number): void {
     if (newIngredient){
-      this.recipeIngredients?.push(newIngredient);
+      // this.recipeIngredients?.push(newIngredient);
       console.log("newly added ingredient: ", newIngredient);
       console.log("all ingredients: ", this.recipeIngredients)
     }

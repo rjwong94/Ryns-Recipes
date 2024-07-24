@@ -27,10 +27,10 @@
   <div class="ingredients-dropdown">
     <label for="ingredients">Ingredients: </label>
 
-    <select name="ingredientSelect" name="selectedIngredient">
+    <select formControlName="ingredient" name="ingredientSelect">
       <option [value]="" disabled>Select an ingredient</option>
 
-      <option *ngFor="let ingredient of (ingredients$ | async)" [ngValue]="ingredient">
+      <option *ngFor="let ingredient of (ingredients$ | async)" [ngValue]="ingredient.id">
         {{ingredient.name}}
       </option>
     </select>
