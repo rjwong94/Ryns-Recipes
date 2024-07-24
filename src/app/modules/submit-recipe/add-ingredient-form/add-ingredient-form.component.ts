@@ -22,13 +22,14 @@ export class AddIngredientFormComponent {
   public addIngredientForm: FormGroup = new FormGroup({
     categoryId: new FormControl(0, [Validators.required]),
     subCategoryId: new FormControl(0, [Validators.required]),
+    ingredientId: new FormControl(0, [Validators.required]),
   })
 
-  private get _categoryIdForm(): FormControl<number> {
+  public get categoryIdForm(): FormControl<number> {
     return this.addIngredientForm.get('categoryId') as FormControl<number>;
   }
 
-  private get _subCategoryIdForm(): FormControl<number | undefined> {
+  public get subCategoryIdForm(): FormControl<number | undefined> {
     return this.addIngredientForm.get('subCategoryId') as FormControl<number>;
   }
 
@@ -36,23 +37,23 @@ export class AddIngredientFormComponent {
     this.categories$ = this._is.categories$;
 
     this.subcategory$ = this.addIngredientForm.get('categoryId')!.valueChanges.pipe(
-      startWith(this._categoryIdForm.value),
+      startWith(this.categoryIdForm.value),
       switchMap(categoryId => this._is.getSubCategoryByCategory(categoryId)),
       tap(subCategories => {
         if (subCategories.length === 0) {
-          this._subCategoryIdForm.patchValue(undefined);
-          this._subCategoryIdForm.disable();
+          this.subCategoryIdForm.patchValue(undefined);
+          this.subCategoryIdForm.disable();
         }
         else {
-          this._subCategoryIdForm.patchValue(0);
-          this._subCategoryIdForm.enable();
+          this.subCategoryIdForm.patchValue(0);
+          this.subCategoryIdForm.enable();
         }
       })
     )
 
     this.ingredients$ = combineLatest([
-      this._categoryIdForm.valueChanges.pipe(startWith(this._categoryIdForm.value)),
-      this._subCategoryIdForm.valueChanges.pipe(startWith(this._subCategoryIdForm.value))
+      this.categoryIdForm.valueChanges.pipe(startWith(this.categoryIdForm.value)),
+      this.subCategoryIdForm.valueChanges.pipe(startWith(this.subCategoryIdForm.value))
     ]).pipe(
       switchMap(([categoryId, subCategoryId]) => this._is.getIngredientById(categoryId, subCategoryId)),
       tap(ingredient => {
@@ -66,11 +67,6 @@ export class AddIngredientFormComponent {
   @Output() public onSubmit: EventEmitter<Ingredient> = new EventEmitter();
 
   submit(ing: Ingredient | undefined): void {
-    if (typeof ing === 'undefined') {
-      console.log(ing);
-    } else {
-      this.onSubmit.emit(ing as Ingredient)
-    }
+
   }
 }
-// test addition

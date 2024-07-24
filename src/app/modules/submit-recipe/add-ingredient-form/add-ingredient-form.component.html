@@ -27,7 +27,7 @@
   <div class="ingredients-dropdown">
     <label for="ingredients">Ingredients: </label>
 
-    <select name="ingredientSelect" [(ngModel)]="selectedIngredient">
+    <select name="ingredientSelect" name="selectedIngredient">
       <option disabled selected>Select an ingredient</option>
 
       <option *ngFor="let ingredient of (ingredients$ | async)" [ngValue]="ingredient">
