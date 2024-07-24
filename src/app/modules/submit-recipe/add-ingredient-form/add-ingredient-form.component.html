@@ -27,9 +27,8 @@
   <div class="ingredients-dropdown">
     <label for="ingredients">Ingredients: </label>
 
-    <select name="ingredientSelect" #ingredientSelect>
-      <option disabled selected>Select an ingredient
-      </option>
+    <select name="ingredientSelect" [(ngModel)]="selectedIngredient">
+      <option disabled selected>Select an ingredient</option>
 
       <option *ngFor="let ingredient of (ingredients$ | async)" [ngValue]="ingredient">
         {{ingredient.name}}
@@ -38,7 +37,7 @@
   </div>
 
   <div class="submit-button">
-    <button type="submit" name="ingredientFormSubmitButton" (click)="submit(ingredientSelect.value)"
+    <button type="submit" name="ingredientFormSubmitButton" (click)="submit(selectedIngredient)"
       [disabled]="addIngredientForm.invalid">Add
       ingredient</button>
   </div>

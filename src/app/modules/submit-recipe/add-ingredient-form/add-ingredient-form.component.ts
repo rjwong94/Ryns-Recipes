@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { ReactiveFormsModule, FormControl, FormGroup, Validators, FormsModule } from '@angular/forms';
 import { IngredientsService } from '../../../core/services/ingredients/ingredients.service';
-import { combineLatest, Observable, shareReplay, startWith, switchMap, tap } from 'rxjs';
+import { combineLatest, Observable, startWith, switchMap, tap } from 'rxjs';
 import { Category, Ingredient, SubCategory } from '../../../core/services/ingredients/ingredients.interface';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { IngredientFormComponent } from '../../submit-ingredient/ingredient-form/ingredient-form.component';
@@ -17,7 +17,7 @@ export class AddIngredientFormComponent {
   categories$: Observable<Category[]>;
   subcategory$!: Observable<SubCategory[] | undefined>;
   ingredients$!: Observable<Ingredient[] | undefined>;
-  selectedIngredient: (Ingredient | undefined);
+  selectedIngredient!: (Ingredient | undefined);
 
   public addIngredientForm: FormGroup = new FormGroup({
     categoryId: new FormControl(0, [Validators.required]),
@@ -65,11 +65,12 @@ export class AddIngredientFormComponent {
 
   @Output() public onSubmit: EventEmitter<Ingredient> = new EventEmitter();
 
-  submit(ing: Ingredient | String): void {
-    if (typeof ing === 'string') {
+  submit(ing: Ingredient | undefined): void {
+    if (typeof ing === 'undefined') {
       console.log(ing);
     } else {
       this.onSubmit.emit(ing as Ingredient)
     }
   }
 }
+// test addition
