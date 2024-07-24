@@ -66,7 +66,7 @@ export class AddIngredientFormComponent {
 
   @Output() public onSubmit: EventEmitter<Ingredient> = new EventEmitter();
 
-  submit(ing: Ingredient | undefined): void {
+  submit(): void {
 
   }
 }

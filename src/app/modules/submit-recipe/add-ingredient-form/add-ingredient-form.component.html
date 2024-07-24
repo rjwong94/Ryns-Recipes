@@ -3,7 +3,7 @@
   <div class="category-dropdown">
     <label for="category">Category: </label>
     <select formControlName="categoryId" name="categorySelect">
-      <option value="" disabled selected>Select the ingredient category
+      <option [value]="" disabled>Select the ingredient category
       </option>
 
       <option *ngFor="let category of (categories$ | async)" [ngValue]="category.id">
@@ -15,7 +15,7 @@
   <div class="subcategory-dropdown">
     <label for="subcategory">Sub Category: </label>
     <select formControlName="subCategoryId" name="subCategorySelect">
-      <option disabled selected>Select the ingredient subcategory
+      <option [value]="" disabled>Select the ingredient subcategory
       </option>
 
       <option *ngFor="let subcategory of (subcategory$ | async)" [ngValue]="subcategory.id">
@@ -28,7 +28,7 @@
     <label for="ingredients">Ingredients: </label>
 
     <select name="ingredientSelect" name="selectedIngredient">
-      <option disabled selected>Select an ingredient</option>
+      <option [value]="" disabled>Select an ingredient</option>
 
       <option *ngFor="let ingredient of (ingredients$ | async)" [ngValue]="ingredient">
         {{ingredient.name}}
@@ -37,8 +37,8 @@
   </div>
 
   <div class="submit-button">
-    <button type="submit" name="ingredientFormSubmitButton" (click)="submit(selectedIngredient)"
-      [disabled]="addIngredientForm.invalid">Add
+    <button type="submit" name="ingredientFormSubmitButton" (click)="submit()"
+      [disabled]="!addIngredientForm.valid">Add
       ingredient</button>
   </div>
 </form>
