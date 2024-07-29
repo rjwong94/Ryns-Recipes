@@ -28,7 +28,7 @@ export class SubmitRecipeComponent {
     return this.ingredientIds$.pipe(
       take(1)
     ).subscribe(ingredients => {
-      if(newIngredientId !== 0 && !newIngredientId) return;
+      if(newIngredientId !== 0 && !newIngredientId || ingredients.includes(newIngredientId)) return;
       ingredients?.push(newIngredientId);
       this._ingredientIds$.next([...ingredients]);
     });
