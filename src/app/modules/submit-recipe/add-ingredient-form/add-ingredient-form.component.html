@@ -36,6 +36,14 @@
     </select>
   </div>
 
+  <div class="quantity">
+    <label for="quantity">Amount: </label>
+    <input type="text" formControlName="amount" name="amountInput" />
+    
+    <label for="unit">Unit: </label>
+    <input type="text" formControlName="unit" name="unitInput" />
+  </div>
+
   <div class="submit-button">
     <button type="submit" name="ingredientFormSubmitButton" (click)="submit()"
       [disabled]="!addIngredientForm.valid">Add

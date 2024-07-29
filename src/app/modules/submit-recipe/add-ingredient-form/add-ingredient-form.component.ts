@@ -17,12 +17,13 @@ export class AddIngredientFormComponent {
   categories$: Observable<Category[]>;
   subcategory$!: Observable<SubCategory[] | undefined>;
   ingredients$!: Observable<Ingredient[] | undefined>;
-  selectedIngredient!: (Ingredient | undefined);
 
   public addIngredientForm: FormGroup = new FormGroup({
     categoryId: new FormControl(0, [Validators.required]),
     subCategoryId: new FormControl(0, [Validators.required]),
     ingredient: new FormControl(0, [Validators.required]),
+    amount: new FormControl(0, [Validators.required, Validators.pattern('^[0-9]*$')]),
+    unit: new FormControl("", [Validators.required, Validators.pattern('^[a-zA-Z]*$')]),
   })
 
   public get categoryIdForm(): FormControl<number> {
