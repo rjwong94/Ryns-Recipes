@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { ReactiveFormsModule, FormControl, FormGroup, Validators, FormsModule } from '@angular/forms';
 import { IngredientsService } from '../../../core/services/ingredients/ingredients.service';
-import { combineLatest, Observable, shareReplay, startWith, switchMap, tap } from 'rxjs';
+import { combineLatest, Observable, startWith, switchMap, take, tap } from 'rxjs';
 import { Category, Ingredient, SubCategory } from '../../../core/services/ingredients/ingredients.interface';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { IngredientFormComponent } from '../../submit-ingredient/ingredient-form/ingredient-form.component';
@@ -17,59 +17,69 @@ export class AddIngredientFormComponent {
   categories$: Observable<Category[]>;
   subcategory$!: Observable<SubCategory[] | undefined>;
   ingredients$!: Observable<Ingredient[] | undefined>;
-  selectedIngredient: (Ingredient | undefined);
 
   public addIngredientForm: FormGroup = new FormGroup({
     categoryId: new FormControl(0, [Validators.required]),
     subCategoryId: new FormControl(0, [Validators.required]),
+    ingredient: new FormControl(0, [Validators.required]),
+    amount: new FormControl(0, [Validators.required, Validators.pattern('^[0-9]*$')]),
+    unit: new FormControl("", [Validators.required, Validators.pattern('^[a-zA-Z]*$')]),
   })
 
-  private get _categoryIdForm(): FormControl<number> {
+  public get categoryIdForm(): FormControl<number> {
     return this.addIngredientForm.get('categoryId') as FormControl<number>;
   }
 
-  private get _subCategoryIdForm(): FormControl<number | undefined> {
+  public get subCategoryIdForm(): FormControl<number | undefined> {
     return this.addIngredientForm.get('subCategoryId') as FormControl<number>;
   }
 
+  public get ingredientIdForm(): FormControl<number> {
+    return this.addIngredientForm.get('ingredient') as FormControl<number>;
+  }
+
   constructor(private _is: IngredientsService) {
-    this.categories$ = this._is.categories$;
+    this.categories$ = this._is.categories$.pipe(take(1));
 
     this.subcategory$ = this.addIngredientForm.get('categoryId')!.valueChanges.pipe(
-      startWith(this._categoryIdForm.value),
+      startWith(this.categoryIdForm.value),
       switchMap(categoryId => this._is.getSubCategoryByCategory(categoryId)),
       tap(subCategories => {
         if (subCategories.length === 0) {
-          this._subCategoryIdForm.patchValue(undefined);
-          this._subCategoryIdForm.disable();
+          this.subCategoryIdForm.patchValue(undefined);
+          this.subCategoryIdForm.disable();
         }
         else {
-          this._subCategoryIdForm.patchValue(0);
-          this._subCategoryIdForm.enable();
+          this.subCategoryIdForm.patchValue(0);
+          this.subCategoryIdForm.enable();
         }
       })
     )
 
     this.ingredients$ = combineLatest([
-      this._categoryIdForm.valueChanges.pipe(startWith(this._categoryIdForm.value)),
-      this._subCategoryIdForm.valueChanges.pipe(startWith(this._subCategoryIdForm.value))
+      this.categoryIdForm.valueChanges.pipe(startWith(this.categoryIdForm.value)),
+      this.subCategoryIdForm.valueChanges.pipe(startWith(this.subCategoryIdForm.value))
     ]).pipe(
       switchMap(([categoryId, subCategoryId]) => this._is.getIngredientById(categoryId, subCategoryId)),
-      tap(ingredient => {
-        if (ingredient && ingredient.length > 0) {
-          console.log(ingredient);
-        }
-        else (console.log("ingredient undefined"))
-      })    )
+    );
+
+    this.categoryIdForm.valueChanges.subscribe(catId => {
+      this.subCategoryIdForm.patchValue(0);
+      this.ingredientIdForm.patchValue(0);
+    });
+
+    this.subCategoryIdForm.valueChanges.subscribe(subCatId => {
+      this.ingredientIdForm.patchValue(0);
+    }); 
+
+    this.addIngredientForm.valueChanges.subscribe(changes => console.log('changes', changes));
+
   };
 
-  @Output() public onSubmit: EventEmitter<Ingredient> = new EventEmitter();
+  @Output() public onSubmit: EventEmitter<number> = new EventEmitter();
 
-  submit(ing: Ingredient | String): void {
-    if (typeof ing === 'string') {
-      console.log(ing);
-    } else {
-      this.onSubmit.emit(ing as Ingredient)
-    }
+  submit(): void {
+    if(!this.addIngredientForm.valid) return;
+    this.onSubmit.emit(this.addIngredientForm.value['ingredient']);
   }
 }

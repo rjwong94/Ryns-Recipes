@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { ReactiveFormsModule } from '@angular/forms';
+import { BehaviorSubject, Observable, Subscription, take, map, switchMap, combineLatest } from 'rxjs';
 import { Ingredient } from '../../core/services/ingredients/ingredients.interface';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { AddIngredientFormComponent } from './add-ingredient-form/add-ingredient-form.component';
+import { IngredientsService } from '../../core/services/ingredients/ingredients.service';
 
 @Component({
   selector: 'app-submit-recipe',
@@ -13,17 +14,23 @@ import { AddIngredientFormComponent } from './add-ingredient-form/add-ingredient
   styleUrl: './submit-recipe.component.scss'
 })
 export class SubmitRecipeComponent {
-  recipeIngredients: Ingredient[] | undefined = [];
-  _recipeIngredients$: BehaviorSubject<Ingredient[] | undefined> = new BehaviorSubject(this.recipeIngredients);
-  recipeIngredients$: Observable<Ingredient[] | undefined> = this._recipeIngredients$.asObservable();
+  _ingredientIds$: BehaviorSubject<number[]> = new BehaviorSubject([] as number[]);
+  ingredientIds$: Observable<number[]> = this._ingredientIds$.asObservable();
 
-  public addIngredient(newIngredient: Ingredient): void {
-    if (newIngredient){
-      this.recipeIngredients?.push(newIngredient);
-      console.log("newly added ingredient: ", newIngredient);
-      console.log("all ingredients: ", this.recipeIngredients)
-    }
+  public recipeIngredients$: Observable<Ingredient[]> = this.ingredientIds$.pipe(
+    map(ingredientIds => ingredientIds.map(id => this._is.getIngredient(id) as Observable<Ingredient>)),
+    switchMap(ingredients => combineLatest(ingredients)),
+  );
 
-    else (console.log("Undefined Ingredient"))
+  constructor(private _is: IngredientsService) {}
+
+  public addIngredient(newIngredientId: number): Subscription {
+    return this.ingredientIds$.pipe(
+      take(1)
+    ).subscribe(ingredients => {
+      if(newIngredientId !== 0 && !newIngredientId || ingredients.includes(newIngredientId)) return;
+      ingredients?.push(newIngredientId);
+      this._ingredientIds$.next([...ingredients]);
+    });
   }
 }

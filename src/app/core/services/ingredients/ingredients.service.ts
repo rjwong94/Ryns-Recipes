@@ -23,11 +23,9 @@ export class IngredientsService {
 
 
     public getIngredientById(categoryId: number, subcategoryId?: number): Observable<Ingredient[]> {
-        if (subcategoryId) {
+        if (subcategoryId === 0 || subcategoryId) {
             return this.ingredients$.pipe(
-                map(ingredients => ingredients.filter(
-                    value => value.categoryID === categoryId && value.subcategoryID === subcategoryId
-                ))
+                map(ingredients => ingredients.filter((value:any) => value.categoryID === categoryId && value.subcategoryID === subcategoryId))
             );
 
         }
@@ -35,7 +33,7 @@ export class IngredientsService {
         else {
             return this.ingredients$.pipe(
                 map(ingredients => ingredients.filter(
-                    value => value.categoryID === categoryId
+                    (value: any) => value.categoryID === categoryId
                 ))
             )
         }
