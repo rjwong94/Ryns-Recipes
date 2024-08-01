@@ -24,5 +24,5 @@ export const RECIPEINGREDIENTS: RecipeIngredient[] = [
   {recipeId: 0, ingredientId: 2, amount: 3, unit: 'cloves'},
   {recipeId: 0, ingredientId: 3, amount: 1, unit: 'large'},
   {recipeId: 0, ingredientId: 4, amount: 4, unit: 'tbsp'},
-  {recipeId: 1, ingredientId: 0, amount: 2, unit: 'thighs'},
+  {recipeId: 1, ingredientId: 0, amount: 2, },
 ];
