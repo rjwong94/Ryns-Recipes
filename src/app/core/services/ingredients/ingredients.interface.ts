@@ -8,12 +8,6 @@ export interface Ingredient extends NewIngredient {
   id: number;
 }
 
-export interface RecipeIngredient extends Ingredient {
-  recipeID: number;
-  amount: number;
-  unit: string;
-}
-
 export interface Category {
   id: number;
   name: string;

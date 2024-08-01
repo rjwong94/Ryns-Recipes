@@ -1,10 +1,10 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
-import { Recipe } from '../../../core/services/recipes/recipes.interface';
+import { Component, Input, OnChanges } from '@angular/core';
+import { Recipe, RecipeIngredient } from '../../../core/services/recipes/recipes.interface';
 import { CommonModule, AsyncPipe } from '@angular/common';
 import { RecipesService } from '../../../core/services/recipes/recipes.service';
 import { IngredientsService } from '../../../core/services/ingredients/ingredients.service';
 import { Ingredient } from '../../../core/services/ingredients/ingredients.interface';
-import { Observable, startWith, switchMap, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-recipe-details',
@@ -17,6 +17,7 @@ export class RecipeDetailsComponent implements OnChanges {
   @Input() id!: number;
 
   public recipes$!: Observable<Recipe | undefined>;
+  public recipeIngredients$!: Observable<RecipeIngredient[] | undefined>;
 
   constructor(
     private _rs: RecipesService, 
@@ -25,6 +26,7 @@ export class RecipeDetailsComponent implements OnChanges {
 
   ngOnChanges(): void {
     this.recipes$ = this._rs.getRecipe(this.id);
+    this.recipeIngredients$ = this._rs.getRecipeIngredients(this.id);
   }
 
   public getIngredient(id: number): Observable<Ingredient | undefined> {

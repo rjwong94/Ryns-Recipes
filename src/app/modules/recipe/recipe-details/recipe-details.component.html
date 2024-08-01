@@ -2,9 +2,9 @@
   <!-- The below ingredient-list will eventually have its own component and app outlet in place -->
   <div class="ingredient-list">
     <h3>Ingredients</h3>
-    <ng-container *ngFor="let ingredients of recipe.ingredients; index as i;">
-      <ng-container *ngIf="(getIngredient(ingredients) | async) as ingredient">
-        <ul>{{recipe.amount[i]}} {{recipe.unit[i]}} {{ ingredient.name }}</ul>
+    <ng-container *ngFor="let ingredients of (recipeIngredients$ | async)">
+      <ng-container *ngIf="(getIngredient(ingredients.ingredientId) | async) as ingredient">
+        <ul>{{ingredients.amount}} {{ingredients.unit}} {{ ingredient.name }}</ul>
       </ng-container>
     </ng-container>
   </div>

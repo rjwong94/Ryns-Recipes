@@ -1,11 +1,9 @@
-import { Recipe } from "./recipes.interface";
+import { Recipe, RecipeIngredient } from "./recipes.interface";
 
 export const RECIPES: Recipe[] = [
   {
-    id: 1, name: 'Red Sauce',
+    id: 0, name: 'Red Sauce',
     ingredients: [2, 3, 4],
-    amount: [3, 2, 4],
-    unit: ['cloves', '', 'tbsp'],
     steps: [
       'Sautee garlic in 1/4 cup oil over medium in a pot or sauce pan.',
       'Add red pepper flakes and dried oregano.',
@@ -17,9 +15,14 @@ export const RECIPES: Recipe[] = [
     ],
   },
   {
-    id: 2, name: 'Oyakodon',
+    id: 1, name: 'Oyakodon',
     ingredients: [0],
-    amount: [1],
-    unit: ['lbs'],
   }
+];
+
+export const RECIPEINGREDIENTS: RecipeIngredient[] = [
+  {recipeId: 0, ingredientId: 2, amount: 3, unit: 'cloves'},
+  {recipeId: 0, ingredientId: 3, amount: 1, unit: 'large'},
+  {recipeId: 0, ingredientId: 4, amount: 4, unit: 'tbsp'},
+  {recipeId: 1, ingredientId: 0, amount: 2, unit: 'thighs'},
 ];
