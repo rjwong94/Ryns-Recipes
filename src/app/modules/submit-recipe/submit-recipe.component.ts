@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { BehaviorSubject, Observable, Subscription, take, map, switchMap, combineLatest } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, take, map, switchMap, combineLatest, startWith } from 'rxjs';
 import { Ingredient } from '../../core/services/ingredients/ingredients.interface';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { AddIngredientFormComponent } from './add-ingredient-form/add-ingredient-form.component';
 import { IngredientsService } from '../../core/services/ingredients/ingredients.service';
+import { RecipeIngredient } from '../../core/services/recipes/recipes.interface';
+import { RecipesService } from '../../core/services/recipes/recipes.service';
 
 @Component({
   selector: 'app-submit-recipe',
@@ -16,13 +18,21 @@ import { IngredientsService } from '../../core/services/ingredients/ingredients.
 export class SubmitRecipeComponent {
   _ingredientIds$: BehaviorSubject<number[]> = new BehaviorSubject([] as number[]);
   ingredientIds$: Observable<number[]> = this._ingredientIds$.asObservable();
+  ingredients$: Observable<Ingredient[]>;
+  recipeIngredients$: Observable<RecipeIngredient[]>;
 
-  public recipeIngredients$: Observable<Ingredient[]> = this.ingredientIds$.pipe(
-    map(ingredientIds => ingredientIds.map(id => this._is.getIngredient(id) as Observable<Ingredient>)),
-    switchMap(ingredients => combineLatest(ingredients)),
-  );
+  constructor(private _is: IngredientsService, private _rs: RecipesService) {
+    this.recipeIngredients$ = this._rs.recipeIngredients$.pipe(
+      map(recipeIngredients => recipeIngredients.filter(
+        value => value.recipeId === this._rs.getNextRecipeId()
+      ))
+    )
 
-  constructor(private _is: IngredientsService) {}
+    this.ingredients$ = this.ingredientIds$.pipe(
+      map(ingredientIds => ingredientIds.map(id => this._is.getIngredient(id) as Observable<Ingredient>)),
+      switchMap(ingredients => combineLatest(ingredients)),
+    )
+  }
 
   public addIngredient(newIngredientId: number): Subscription {
     return this.ingredientIds$.pipe(

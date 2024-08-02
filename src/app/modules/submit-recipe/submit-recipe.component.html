@@ -2,7 +2,21 @@
 
 <div class="ingredients-list">
   <label for="ingredients">Ingredients: </label>
-  <ng-container *ngFor="let ingredient of (recipeIngredients$ | async)">
-    <ul>{{ingredient.name}}</ul>
+  <!-- <ng-container *ngFor="let ingredient of (ingredients$ | async)">
+    <ng-container *ngIf="(recipeIngredients$ | async) as recipeIngredient">
+      <ul>{{recipeIngredient.a}} {{ingredient.name}}</ul>
+    </ng-container>
+  </ng-container> -->
+  <ng-container *ngIf="(recipeIngredients$ | async) as recipeIngredient">
+    <ng-container *ngFor="let ingredient of (ingredients$ | async)">
+      <!-- <ul>{{recipeIngredient[1].amount}} {{ingredient.name}}</ul> -->
+    </ng-container>
+  </ng-container>
+</div>
+
+<div class="recipe-ingredients-list">
+  <label for="recipe-ingredients">Recipe Ingredients: </label>
+  <ng-container *ngFor="let recipeIngredient of (recipeIngredients$ | async)">
+    <ul>{{recipeIngredient.recipeId}} {{recipeIngredient.amount}} {{recipeIngredient.unit}} {{recipeIngredient.ingredientId}}</ul>
   </ng-container>
 </div>
