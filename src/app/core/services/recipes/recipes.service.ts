@@ -6,11 +6,11 @@ import { BehaviorSubject, Observable, map } from "rxjs";
 @Injectable({ providedIn: 'root' })
 export class RecipesService {
     public recipes: Recipe[] = RECIPES;
-    private _recipes: BehaviorSubject<Recipe[]> = new BehaviorSubject(RECIPES);
-    public recipes$: Observable<Recipe[]> = this._recipes.asObservable();
+    private _recipes$: BehaviorSubject<Recipe[]> = new BehaviorSubject(RECIPES);
+    public recipes$: Observable<Recipe[]> = this._recipes$.asObservable();
     public recipeIngredients: RecipeIngredient[] = RECIPEINGREDIENTS;
-    private _recipeIngredients: BehaviorSubject<RecipeIngredient[]> = new BehaviorSubject(RECIPEINGREDIENTS);
-    public recipeIngredients$: Observable<RecipeIngredient[]> = this._recipeIngredients.asObservable();
+    private _recipeIngredients$: BehaviorSubject<RecipeIngredient[]> = new BehaviorSubject(RECIPEINGREDIENTS);
+    public recipeIngredients$: Observable<RecipeIngredient[]> = this._recipeIngredients$.asObservable();
     
     constructor() {}
 
@@ -28,5 +28,13 @@ export class RecipesService {
                 value => value.recipeId === id
             ))
         )
+    }
+
+    public getNextRecipeId(): number {
+        return Math.max(...this._recipes$.value.map(recipe => recipe.id)) + 1;
+    }
+
+    public addRecipeIngredient(recipeIngredient: RecipeIngredient): void {
+        this._recipeIngredients$.next([...this._recipeIngredients$.value, recipeIngredient]);
     }
 }

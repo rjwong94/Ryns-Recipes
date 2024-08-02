@@ -1,10 +1,12 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { ReactiveFormsModule, FormControl, FormGroup, Validators, FormsModule } from '@angular/forms';
 import { IngredientsService } from '../../../core/services/ingredients/ingredients.service';
+import { RecipesService } from '../../../core/services/recipes/recipes.service';
 import { combineLatest, Observable, startWith, switchMap, take, tap } from 'rxjs';
 import { Category, Ingredient, SubCategory } from '../../../core/services/ingredients/ingredients.interface';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { IngredientFormComponent } from '../../submit-ingredient/ingredient-form/ingredient-form.component';
+import { newRecipeIngredient, RecipeIngredient } from '../../../core/services/recipes/recipes.interface';
 
 @Component({
   selector: 'app-add-ingredient-form',
@@ -22,8 +24,8 @@ export class AddIngredientFormComponent {
     categoryId: new FormControl(0, [Validators.required]),
     subCategoryId: new FormControl(0, [Validators.required]),
     ingredient: new FormControl(0, [Validators.required]),
-    amount: new FormControl(0, [Validators.required, Validators.pattern('^[0-9]*$')]),
-    unit: new FormControl("", [Validators.required, Validators.pattern('^[a-zA-Z]*$')]),
+    amount: new FormControl(0, [Validators.pattern('^[0-9]*$')]),
+    unit: new FormControl("", [Validators.pattern('^[a-zA-Z]*$')]),
   })
 
   public get categoryIdForm(): FormControl<number> {
@@ -38,7 +40,7 @@ export class AddIngredientFormComponent {
     return this.addIngredientForm.get('ingredient') as FormControl<number>;
   }
 
-  constructor(private _is: IngredientsService) {
+  constructor(private _is: IngredientsService, private _rs: RecipesService) {
     this.categories$ = this._is.categories$.pipe(take(1));
 
     this.subcategory$ = this.addIngredientForm.get('categoryId')!.valueChanges.pipe(
@@ -70,7 +72,7 @@ export class AddIngredientFormComponent {
 
     this.subCategoryIdForm.valueChanges.subscribe(subCatId => {
       this.ingredientIdForm.patchValue(0);
-    }); 
+    });
 
     this.addIngredientForm.valueChanges.subscribe(changes => console.log('changes', changes));
 
@@ -79,7 +81,22 @@ export class AddIngredientFormComponent {
   @Output() public onSubmit: EventEmitter<number> = new EventEmitter();
 
   submit(): void {
-    if(!this.addIngredientForm.valid) return;
-    this.onSubmit.emit(this.addIngredientForm.value['ingredient']);
+    if (!this.addIngredientForm.valid) return;
+    else {
+      const formValues = this.addIngredientForm.value;
+
+      const newRecipeIngredient: RecipeIngredient = {
+        recipeId: this._rs.getNextRecipeId(),
+        ingredientId: formValues.ingredient,
+        amount: formValues.amount,
+        unit: formValues.unit
+      }
+
+      console.log('New Recipe Ingredient:', newRecipeIngredient);
+      console.log('All Recipe Ingredients:', this._rs.recipeIngredients);
+      this._rs.addRecipeIngredient(newRecipeIngredient);
+
+      this.onSubmit.emit(this.addIngredientForm.value['ingredient'])
+    }
   }
 }
