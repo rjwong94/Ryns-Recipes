@@ -43,4 +43,8 @@ export class SubmitRecipeComponent {
       this._ingredientIds$.next([...ingredients]);
     });
   }
+
+  public getIngredient(id: number): Observable<Ingredient | undefined> {
+    return this._is.getIngredient(id);
+  }
 }
