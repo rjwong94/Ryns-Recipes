@@ -18,7 +18,6 @@ import { RecipesService } from '../../core/services/recipes/recipes.service';
 export class SubmitRecipeComponent {
   _ingredientIds$: BehaviorSubject<number[]> = new BehaviorSubject([] as number[]);
   ingredientIds$: Observable<number[]> = this._ingredientIds$.asObservable();
-  ingredients$: Observable<Ingredient[]>;
   recipeIngredients$: Observable<RecipeIngredient[]>;
 
   constructor(private _is: IngredientsService, private _rs: RecipesService) {
@@ -26,11 +25,6 @@ export class SubmitRecipeComponent {
       map(recipeIngredients => recipeIngredients.filter(
         value => value.recipeId === this._rs.getNextRecipeId()
       ))
-    )
-
-    this.ingredients$ = this.ingredientIds$.pipe(
-      map(ingredientIds => ingredientIds.map(id => this._is.getIngredient(id) as Observable<Ingredient>)),
-      switchMap(ingredients => combineLatest(ingredients)),
     )
   }
 
