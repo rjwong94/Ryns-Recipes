@@ -29,6 +29,12 @@ export class SubmitRecipeComponent {
   }
 
   public addIngredient(newIngredientId: number): Subscription {
+    // return this.recipeIngredients$.pipe(
+    //   take(1)
+    // ).subscribe(recipeIngredients => {
+    //   if(newIngredientId !== 0 && !newIngredientId || recipeIngredients.map(ri => ri.ingredientId).includes(newIngredientId)) return;
+    //   recipeIngredients.push(newIngredientId);
+    // )
     return this.ingredientIds$.pipe(
       take(1)
     ).subscribe(ingredients => {

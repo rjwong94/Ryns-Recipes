@@ -82,8 +82,17 @@ export class AddIngredientFormComponent {
 
   submit(): void {
     if (!this.addIngredientForm.valid) return;
-    else {
+
       const formValues = this.addIngredientForm.value;
+      const newIngredientId = formValues.ingredient;
+
+      this._rs.recipeIngredients$.pipe(take(1)).subscribe(ingredients => {
+        const ingredientExists = ingredients.some(ingredient => ingredient.ingredientId === newIngredientId);
+  
+        if (ingredientExists) {
+          console.log('Ingredient already exists in the recipe.');
+          return;
+        }
 
       const newRecipeIngredient: RecipeIngredient = {
         recipeId: this._rs.getNextRecipeId(),
@@ -97,6 +106,6 @@ export class AddIngredientFormComponent {
       this._rs.addRecipeIngredient(newRecipeIngredient);
 
       this.onSubmit.emit(this.addIngredientForm.value['ingredient'])
-    }
+    });
   }
 }
