@@ -87,8 +87,19 @@ export class AddIngredientFormComponent {
       const newIngredientId = formValues.ingredient;
 
       this._rs.recipeIngredients$.pipe(take(1)).subscribe(ingredients => {
-        const ingredientExists = ingredients.some(ingredient => ingredient.ingredientId === newIngredientId);
-  
+        if (ingredients.length === 0) {
+          console.log('No ingredients found.');
+          return;
+        }
+    
+        // Get the latest recipeId
+        const latestRecipeId = Math.max(...ingredients.map(ingredient => ingredient.recipeId));
+    
+        // Filter ingredients by the latest recipeId
+        const latestRecipeIngredients = ingredients.filter(ingredient => ingredient.recipeId === latestRecipeId);
+    
+        // Check if the new ingredient already exists in the latest recipe
+        const ingredientExists = latestRecipeIngredients.some(ingredient => ingredient.ingredientId === newIngredientId);  
         if (ingredientExists) {
           console.log('Ingredient already exists in the recipe.');
           return;
