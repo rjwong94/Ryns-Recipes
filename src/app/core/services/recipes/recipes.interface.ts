@@ -1,6 +1,5 @@
 export interface NewRecipe {
   name: string;
-  ingredients: number[];
   steps?: string[];
 }
 
