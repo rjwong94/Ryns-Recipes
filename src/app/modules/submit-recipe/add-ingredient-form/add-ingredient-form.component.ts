@@ -6,7 +6,7 @@ import { combineLatest, Observable, startWith, switchMap, take, tap } from 'rxjs
 import { Category, Ingredient, SubCategory } from '../../../core/services/ingredients/ingredients.interface';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { IngredientFormComponent } from '../../submit-ingredient/ingredient-form/ingredient-form.component';
-import { newRecipeIngredient, RecipeIngredient } from '../../../core/services/recipes/recipes.interface';
+import { RecipeIngredient } from '../../../core/services/recipes/recipes.interface';
 
 @Component({
   selector: 'app-add-ingredient-form',
@@ -106,7 +106,6 @@ export class AddIngredientFormComponent {
         }
 
       const newRecipeIngredient: RecipeIngredient = {
-        recipeId: this._rs.getNextRecipeId(),
         ingredientId: formValues.ingredient,
         amount: formValues.amount,
         unit: formValues.unit

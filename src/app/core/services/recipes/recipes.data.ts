@@ -12,6 +12,11 @@ export const RECIPES: Recipe[] = [
       'Add basil, slightly cover the pot, and simmer the sauce for an hour on low whilst stirring occassionally.',
       'Remove the sauce from the heat, remove the basil, and stir in 2 tbsp of unsalted butter until melted and combined. Season with salt and pepper to taste.'
     ],
+    ingredients: [
+      {ingredientId: 2, amount: 3, unit: 'cloves'},
+      {ingredientId: 3, amount: 1, unit: 'large'},
+      {ingredientId: 4, amount: 4, unit: 'tbsp'},
+    ]
   },
   {
     id: 1, name: 'Oyakodon',
@@ -23,14 +28,11 @@ export const RECIPES: Recipe[] = [
       'Add 1 cup of sliced chicken thighs and cook until no longer pink.',
       'Add 2 beaten eggs and cook until the eggs are set.',
       'Serve over a bowl of rice and garnish with sliced green onions.'
+    ],
+    ingredients: [
+      {ingredientId: 0, amount: 1},
+      {ingredientId: 3, amount: 1/4},
     ]
   }
 ];
 
-export const RECIPEINGREDIENTS: RecipeIngredient[] = [
-  {recipeId: 0, ingredientId: 2, amount: 3, unit: 'cloves'},
-  {recipeId: 0, ingredientId: 3, amount: 1, unit: 'large'},
-  {recipeId: 0, ingredientId: 4, amount: 4, unit: 'tbsp'},
-  {recipeId: 1, ingredientId: 0, amount: 1, },
-  {recipeId: 1, ingredientId: 3, amount: 1/4, },
-];
