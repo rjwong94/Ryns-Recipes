@@ -19,6 +19,7 @@ export class AddIngredientFormComponent {
   categories$: Observable<Category[]>;
   subcategory$!: Observable<SubCategory[] | undefined>;
   ingredients$!: Observable<Ingredient[] | undefined>;
+  recipeIngredients
 
   public addIngredientForm: FormGroup = new FormGroup({
     categoryId: new FormControl(0, [Validators.required]),
@@ -78,44 +79,20 @@ export class AddIngredientFormComponent {
 
   };
 
-  @Output() public onSubmit: EventEmitter<number> = new EventEmitter();
+  @Output() public onSubmit: EventEmitter<RecipeIngredient> = new EventEmitter();
 
   submit(): void {
     if (!this.addIngredientForm.valid) return;
 
-      const formValues = this.addIngredientForm.value;
-      const newIngredientId = formValues.ingredient;
+    const formValues = this.addIngredientForm.value;
 
-      this._rs.recipeIngredients$.pipe(take(1)).subscribe(ingredients => {
-        if (ingredients.length === 0) {
-          console.log('No ingredients found.');
-          return;
-        }
-    
-        // Get the latest recipeId
-        const latestRecipeId = Math.max(...ingredients.map(ingredient => ingredient.recipeId));
-    
-        // Filter ingredients by the latest recipeId
-        const latestRecipeIngredients = ingredients.filter(ingredient => ingredient.recipeId === latestRecipeId);
-    
-        // Check if the new ingredient already exists in the latest recipe
-        const ingredientExists = latestRecipeIngredients.some(ingredient => ingredient.ingredientId === newIngredientId);  
-        if (ingredientExists) {
-          console.log('Ingredient already exists in the recipe.');
-          return;
-        }
+    const newRecipeIngredient: RecipeIngredient = {
+      ingredientId: formValues.ingredient,
+      amount: formValues.amount,
+      unit: formValues.unit
+    }
 
-      const newRecipeIngredient: RecipeIngredient = {
-        ingredientId: formValues.ingredient,
-        amount: formValues.amount,
-        unit: formValues.unit
-      }
-
-      console.log('New Recipe Ingredient:', newRecipeIngredient);
-      console.log('All Recipe Ingredients:', this._rs.recipeIngredients);
-      this._rs.addRecipeIngredient(newRecipeIngredient);
-
-      this.onSubmit.emit(this.addIngredientForm.value['ingredient'])
-    });
+    console.log('New Recipe Ingredient:', newRecipeIngredient);
+    this.onSubmit.emit(newRecipeIngredient);
   }
 }

@@ -8,7 +8,6 @@ export class RecipesService {
     public recipes: Recipe[] = RECIPES;
     private _recipes$: BehaviorSubject<Recipe[]> = new BehaviorSubject(RECIPES);
     public recipes$: Observable<Recipe[]> = this._recipes$.asObservable();
-
     
     constructor() {}
 
@@ -33,7 +32,7 @@ export class RecipesService {
         return Math.max(...this._recipes$.value.map(recipe => recipe.id)) + 1;
     }
 
-    public addRecipeIngredient(recipeIngredient: RecipeIngredient): void {
-        this._recipeIngredients$.next([...this._recipeIngredients$.value, recipeIngredient]);
-    }
+    // public addRecipeIngredient(recipeIngredient: RecipeIngredient): void {
+    //     this._recipeIngredients$.next([...this._recipeIngredients$.value, recipeIngredient]);
+    // }
 }
