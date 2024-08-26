@@ -64,11 +64,18 @@ export class IngredientFormComponent {
         id: this._is.getNextIngredientId(),
       };
 
+      // Check if newIngredient.name already exists in Ingredients$
+      const ingredientExists = this._is.ingredients.some(ingredient => ingredient.name === newIngredient.name);
+      if (ingredientExists) {
+        console.log('Ingredient already exists');
+        return;
+      }
+
       console.log('New Ingredient', newIngredient);
       this._is.addIngredient(newIngredient);
+    } else {
+      console.log('Form is invalid');
     }
-
-    else { console.log('Form is invalid'); }
 
     // TODO: Use EventEmitter with form value
     // console.warn(this.ingredientForm.value);
