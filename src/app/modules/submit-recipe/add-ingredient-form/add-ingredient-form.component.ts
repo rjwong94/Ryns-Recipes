@@ -19,7 +19,6 @@ export class AddIngredientFormComponent {
   categories$: Observable<Category[]>;
   subcategory$!: Observable<SubCategory[] | undefined>;
   ingredients$!: Observable<Ingredient[] | undefined>;
-  recipeIngredients
 
   public addIngredientForm: FormGroup = new FormGroup({
     categoryId: new FormControl(0, [Validators.required]),
