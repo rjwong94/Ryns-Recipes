@@ -8,8 +8,17 @@
     <div ngbAccordionCollapse>
       <div ngbAccordionBody>
         <ng-template>
-          {{recipe.ingredients}}
-          {{recipe.steps}}
+          <div *ngFor="let ingredients of recipe.ingredients">
+            <ng-container *ngIf="(getIngredient(ingredients.ingredientId) | async) as ingredient">
+              {{ingredient.name}}
+            </ng-container>
+          </div>
+          <div>
+            Steps:
+            <ul>
+              <li *ngFor="let step of recipe.steps">{{step}}</li>
+            </ul>
+          </div>
         </ng-template>
       </div>
     </div>
