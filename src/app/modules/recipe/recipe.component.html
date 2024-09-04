@@ -8,23 +8,18 @@
     <div ngbAccordionCollapse>
       <div ngbAccordionBody>
         <ng-template>
+          <h2>Ingredients</h2>
           <div *ngFor="let ingredients of recipe.ingredients">
             <ng-container *ngIf="(getIngredient(ingredients.ingredientId) | async) as ingredient">
-              {{ingredient.name}}
+              {{ingredients.amount}} {{ingredients.unit}} {{ingredient.name}} 
             </ng-container>
           </div>
-          <div>
-            Steps:
-            <ul>
-              <li *ngFor="let step of recipe.steps">{{step}}</li>
-            </ul>
-          </div>
+          <h2>Steps</h2>
+          <ul>
+            <li *ngFor="let step of recipe.steps; let i = index">{{i + 1}}. {{step}}</li>
+          </ul>
         </ng-template>
       </div>
     </div>
   </div>
 </div>
-
-<ng-container *ngIf="selectedRecipeId > -1">
-  <app-recipe-details [id]="selectedRecipeId"></app-recipe-details>
-</ng-container>
