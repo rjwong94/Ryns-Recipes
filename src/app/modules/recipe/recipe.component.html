@@ -1,7 +1,8 @@
 <h1>Recipe</h1>
 
-<div ngbAccordion [closeOthers]="true" *ngFor="let recipe of recipes" class="recipe-list-nav">
-  <div ngbAccordionItem [collapsed]="true">
+<div ngbAccordion [closeOthers]="true" class="recipe-list-nav">
+  @for (recipe of recipes; track recipe) {
+  <div ngbAccordionItem [collapsed]="recipe.id !== 0">
     <h2 ngbAccordionHeader>
       <button ngbAccordionButton>{{recipe.name}}</button>
     </h2>
@@ -10,9 +11,9 @@
         <ng-template>
           <h2>Ingredients</h2>
           <div *ngFor="let ingredients of recipe.ingredients">
-            <ng-container *ngIf="(getIngredient(ingredients.ingredientId) | async) as ingredient">
-              {{ingredients.amount}} {{ingredients.unit}} {{ingredient.name}} 
-            </ng-container>
+            <ng-template *ngIf="(getIngredient(ingredients.ingredientId) | async) as ingredient">
+              {{ingredients.amount}} {{ingredients.unit}} {{ingredient.name}}
+            </ng-template>
           </div>
           <h2>Steps</h2>
           <ul>
@@ -22,4 +23,5 @@
       </div>
     </div>
   </div>
+  }
 </div>
