@@ -2,14 +2,13 @@ import { Component } from '@angular/core';
 import { CommonModule, AsyncPipe } from '@angular/common';
 import { Category, SubCategory, Ingredient } from '../../core/services/ingredients/ingredients.interface';
 import { IngredientsService } from '../../core/services/ingredients/ingredients.service';
-import { IngredientDetailsComponent } from './ingredient-details/ingredient-details.component';
 import { Observable, startWith, switchMap, tap, combineLatest } from 'rxjs';
 import { FormControl, FormGroup, ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-ingredient-list',
   standalone: true,
-  imports: [CommonModule, IngredientDetailsComponent, ReactiveFormsModule, AsyncPipe, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, AsyncPipe, FormsModule],
   templateUrl: './ingredient-list.component.html',
   styleUrl: './ingredient-list.component.scss'
 })

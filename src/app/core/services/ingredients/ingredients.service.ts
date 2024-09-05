@@ -21,7 +21,6 @@ export class IngredientsService {
         )
     }
 
-
     public getIngredientById(categoryId: number, subcategoryId?: number): Observable<Ingredient[]> {
         if (subcategoryId === 0 || subcategoryId) {
             return this.ingredients$.pipe(
@@ -51,10 +50,6 @@ export class IngredientsService {
         return this.categories$.pipe(
             map(categories => categories.filter(category => category.id === id).at(0))
         );
-    }
-
-    public getIngredientByCategory(id: number): Ingredient[] {
-        return this.ingredients.filter(ingredient => ingredient.categoryID === id);
     }
 
     public getSubCategoryByCategory(categoryId: number): Observable<SubCategory[]> {
