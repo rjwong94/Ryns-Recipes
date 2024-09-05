@@ -4,11 +4,12 @@ import { Category, SubCategory, Ingredient } from '../../core/services/ingredien
 import { IngredientsService } from '../../core/services/ingredients/ingredients.service';
 import { Observable, startWith, switchMap, tap, combineLatest } from 'rxjs';
 import { FormControl, FormGroup, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-ingredient-list',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, AsyncPipe, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, AsyncPipe, FormsModule, NgbDropdownModule],
   templateUrl: './ingredient-list.component.html',
   styleUrl: './ingredient-list.component.scss'
 })
