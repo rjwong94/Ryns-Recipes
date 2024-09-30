@@ -17,10 +17,10 @@
           {{category.name}}
         </option>
       </select> -->
-      <div ngbDropdown  formControlName="categoryId" name="categorySelect" class="d-inline-block">
-        <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Category</button>
+      <div ngbDropdown class="d-inline-block">
+        <button formControlName="categoryId" name="categorySelect" class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle> {{ selectedCategory ? selectedCategory.name : 'Select Category' }} </button>
         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-          <button ngbDropdownItem *ngFor="let category of (category$ | async)" [value]="category.id">
+          <button ngbDropdownItem *ngFor="let category of (category$ | async)" (click)="onSelectCategory(category)">
             {{category.name}}
           </button>
         </div>

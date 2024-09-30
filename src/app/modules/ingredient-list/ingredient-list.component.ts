@@ -18,6 +18,7 @@ export class IngredientListComponent {
   category$: Observable<Category[]>;
   subcategory$!: Observable<SubCategory[] | undefined>;
   ingredients$!: Observable<Ingredient[] | undefined>;
+  selectedCategory!: Category | undefined;
 
   public categoryForm: FormGroup = new FormGroup({
     categoryId: new FormControl(0),
@@ -60,6 +61,11 @@ export class IngredientListComponent {
     ]).pipe(
       switchMap(([categoryId, subCategoryId]) => this._is.getIngredientById(categoryId, subCategoryId))
     )
+  }
+
+  onSelectCategory(category: Category): void {
+    this._categoryIdForm.patchValue(category.id);
+    this.selectedCategory = category;
   }
 
 
